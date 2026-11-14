@@ -1,0 +1,42 @@
+{
+  "retrieved": "2026-11-15",
+  "linux_commit": "23c62304dde29abe92013d85910d03a77dada35d",
+  "files": [
+    {
+      "file": "CH543EVT.zip",
+      "url": "https://file.wch.cn/download/file?id=387",
+      "bytes": 1182035,
+      "sha256": "a2bde01f7e07c3acc851cfd4b686862b2d4517a3edf1d86de230349fb4d012cb"
+    },
+    {
+      "file": "CH543DS1.pdf",
+      "url": "https://file.wch.cn/download/file?id=384",
+      "bytes": 739573,
+      "sha256": "4968a0fe1c8c6268b7efc0186a13664db99bbfe433f63db1992ac30277f0674f"
+    },
+    {
+      "file": "dp-linux.h",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/23c62304dde29abe92013d85910d03a77dada35d/include/linux/usb/typec_dp.h",
+      "bytes": 4803,
+      "sha256": "601bc7daf26aee18d4efce18e18af659c9b5937ca59b16f4026e7cde04ba2c50"
+    },
+    {
+      "file": "pd-vdo-linux.h",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/23c62304dde29abe92013d85910d03a77dada35d/include/linux/usb/pd_vdo.h",
+      "bytes": 16903,
+      "sha256": "b16e7254893b68b3d6a96636fdcf0cb3f187de36e654708d48935605360adb88"
+    },
+    {
+      "file": "pd-linux.h",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/23c62304dde29abe92013d85910d03a77dada35d/include/linux/usb/pd.h",
+      "bytes": 24283,
+      "sha256": "c844b3db3f0e4f3cf760d68ba3ff96145d73988c8d030aad8c29b2c1e9a88b50"
+    },
+    {
+      "file": "displayport-linux.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/23c62304dde29abe92013d85910d03a77dada35d/drivers/usb/typec/altmodes/displayport.c",
+      "bytes": 21525,
+      "sha256": "ff445721794092b33a9042e5ac40f356b41f9e8c9dd3b91ea08174ee89dfbfe7"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Preserve original compiler reports, including their formatting.
+docs/validation/** -whitespace linguist-generated=true

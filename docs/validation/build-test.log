@@ -1,0 +1,203 @@
+$ gcc --version
+gcc (Debian 14.2.0-19) 14.2.0
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+$ sdcc --version
+SDCC : mcs51/z80/z180/r2k/r2ka/r3ka/sm83/tlcs90/ez80_z80/z80n/r800/ds390/TININative/ds400/hc08/s08/stm8/pdk13/pdk14/pdk15/mos6502/mos65c02/f8 TD- 4.5.0 #15242 (Linux)
+published under GNU General Public License (GPL)
+$ make test sanitize firmware
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O2 src/wire.c src/pd.c src/dp.c hal/mock.c tests/test_protocol.c -o build/test_protocol
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O2 tests/test_phy.c -o build/test_phy
+./build/test_protocol
+PASS dfp_source
+PASS dfp_sink
+PASS ufp_source
+PASS ufp_sink
+PASS multifunction
+PASS pin_e
+PASS no_svid
+PASS enter_nak
+PASS busy_retry
+PASS busy_exhaustion
+PASS timeout
+PASS pin_mismatch
+PASS reject_configure
+PASS hpd_source
+PASS hpd_sink
+PASS detach
+PASS detach_active
+PASS soft_reset
+PASS hard_reset
+PASS duplicate
+PASS illegal_status
+PASS illegal_header
+PASS illegal_roles
+PASS bad_length
+PASS retry
+PASS retry_exhaustion
+PASS exit_dfp
+PASS exit_ufp
+PASS active_config_nak
+PASS power_source
+PASS no_power
+PASS source_gate
+PASS cap_current_limit
+PASS bad_cap
+PASS role_config
+PASS tick_wrap
+PASS wrong_response
+PASS attention_usb
+PASS attention_exit
+PASS dr_swap_active
+PASS hard_reset_vbus
+PASS soft_reset_dfp
+PASS ufp_usb_config
+PASS disconnect_attention
+PASS config_timeout
+PASS malformed_busy
+PASS svid_low_half
+PASS mode_object_two
+PASS plug_mode
+PASS no_vdm_before_contract
+PASS generated_malformed_frames
+PASS dfp_sink_status_hpd
+PASS ufp_source_status_hpd
+PASS ufp_source_exit_request
+PASS ufp_ignores_dfp_attention
+PASS dfp_status_reserved_zero
+PASS hpd_guard_irq_once
+PASS hpd_guard_detach
+PASS hpd_guard_latest_level
+PASS hard_reset_delayed_vbus_cycle
+PASS hard_reset_hold_timeout
+PASS ufp_status_disconnected
+PASS pending_irq_preserved
+PASS pending_irq_cleared_by_low
+PASS phy_tx_end_missing
+PASS status_busy_preserves_irq
+PASS enter_timeout_boundary
+PASS exit_timeout_boundary
+68 tests, 0 failures, 26564 assertions (PC Mock HAL; no hardware validation)
+./build/test_phy
+PHY register model: 7 groups passed (functional only; no hardware/timing claim)
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer src/wire.c src/pd.c src/dp.c hal/mock.c tests/test_protocol.c -o build/test_protocol_sanitize
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_phy.c -o build/test_phy_sanitize
+ASAN_OPTIONS=detect_leaks=1 ./build/test_protocol_sanitize
+PASS dfp_source
+PASS dfp_sink
+PASS ufp_source
+PASS ufp_sink
+PASS multifunction
+PASS pin_e
+PASS no_svid
+PASS enter_nak
+PASS busy_retry
+PASS busy_exhaustion
+PASS timeout
+PASS pin_mismatch
+PASS reject_configure
+PASS hpd_source
+PASS hpd_sink
+PASS detach
+PASS detach_active
+PASS soft_reset
+PASS hard_reset
+PASS duplicate
+PASS illegal_status
+PASS illegal_header
+PASS illegal_roles
+PASS bad_length
+PASS retry
+PASS retry_exhaustion
+PASS exit_dfp
+PASS exit_ufp
+PASS active_config_nak
+PASS power_source
+PASS no_power
+PASS source_gate
+PASS cap_current_limit
+PASS bad_cap
+PASS role_config
+PASS tick_wrap
+PASS wrong_response
+PASS attention_usb
+PASS attention_exit
+PASS dr_swap_active
+PASS hard_reset_vbus
+PASS soft_reset_dfp
+PASS ufp_usb_config
+PASS disconnect_attention
+PASS config_timeout
+PASS malformed_busy
+PASS svid_low_half
+PASS mode_object_two
+PASS plug_mode
+PASS no_vdm_before_contract
+PASS generated_malformed_frames
+PASS dfp_sink_status_hpd
+PASS ufp_source_status_hpd
+PASS ufp_source_exit_request
+PASS ufp_ignores_dfp_attention
+PASS dfp_status_reserved_zero
+PASS hpd_guard_irq_once
+PASS hpd_guard_detach
+PASS hpd_guard_latest_level
+PASS hard_reset_delayed_vbus_cycle
+PASS hard_reset_hold_timeout
+PASS ufp_status_disconnected
+PASS pending_irq_preserved
+PASS pending_irq_cleared_by_low
+PASS phy_tx_end_missing
+PASS status_busy_preserves_irq
+PASS enter_timeout_boundary
+PASS exit_timeout_boundary
+68 tests, 0 failures, 26564 assertions (PC Mock HAL; no hardware validation)
+ASAN_OPTIONS=detect_leaks=1 ./build/test_phy_sanitize
+PHY register model: 7 groups passed (functional only; no hardware/timing claim)
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/wire.c -o build/target/wire.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/pd.c -o build/target/pd.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/dp.c -o build/target/dp.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c hal/ch543_phy.c -o build/target/ch543_phy.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c hal/ch543_board.c -o build/target/ch543_board.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DDEFAULT_DP_ROLE=1 -c src/main.c -o build/target/main-source.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/target/main-source.rel build/target/wire.rel build/target/pd.rel build/target/dp.rel build/target/ch543_phy.rel build/target/ch543_board.rel -o build/ch543-dp-source.ihx
+python3 tools/check_vectors.py build/ch543-dp-source.ihx
+build/ch543-dp-source.ihx: all 6 vectors + early startup verified: Reset@0000->009c, INT0@0003->2196, Timer0@000b->2008, Timer1@001b->220c, Timer2@002b->20b8, USBPD@0053->1daf
+python3 tools/memory_report.py build/ch543-dp-source.ihx
+ch543-dp-source.ihx: Flash 9913/14336 B; iRAM occupied 187 B + holes 3 B; stack 0xBE..0xFF = 66 B; xRAM 190/256 B.
+
+| Module | code+const | data | idata | xdata | overlay* | bits |
+|---|---:|---:|---:|---:|---:|---:|
+| wire | 195 | 0 | 0 | 0 | 4 | 0 |
+| pd | 3123 | 24 | 67 | 60 | 8 | 0 |
+| dp | 3443 | 45 | 0 | 0 | 4 | 2 |
+| ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
+| ch543_board | 625 | 5 | 0 | 0 | 2 | 0 |
+| main-source | 189 | 0 | 0 | 0 | 0 | 0 |
+
+* Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+
+packihx build/ch543-dp-source.ihx > build/ch543-dp-source.hex
+packihx: read 329 lines, wrote 632: OK.
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DDEFAULT_DP_ROLE=2 -c src/main.c -o build/target/main-sink.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/target/main-sink.rel build/target/wire.rel build/target/pd.rel build/target/dp.rel build/target/ch543_phy.rel build/target/ch543_board.rel -o build/ch543-dp-sink.ihx
+python3 tools/check_vectors.py build/ch543-dp-sink.ihx
+build/ch543-dp-sink.ihx: all 6 vectors + early startup verified: Reset@0000->009c, INT0@0003->2196, Timer0@000b->2008, Timer1@001b->220c, Timer2@002b->20b8, USBPD@0053->1daf
+python3 tools/memory_report.py build/ch543-dp-sink.ihx
+ch543-dp-sink.ihx: Flash 9913/14336 B; iRAM occupied 187 B + holes 3 B; stack 0xBE..0xFF = 66 B; xRAM 190/256 B.
+
+| Module | code+const | data | idata | xdata | overlay* | bits |
+|---|---:|---:|---:|---:|---:|---:|
+| wire | 195 | 0 | 0 | 0 | 4 | 0 |
+| pd | 3123 | 24 | 67 | 60 | 8 | 0 |
+| dp | 3443 | 45 | 0 | 0 | 4 | 2 |
+| ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
+| ch543_board | 625 | 5 | 0 | 0 | 2 | 0 |
+| main-sink | 189 | 0 | 0 | 0 | 0 | 0 |
+
+* Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+
+packihx build/ch543-dp-sink.ihx > build/ch543-dp-sink.hex
+packihx: read 329 lines, wrote 632: OK.

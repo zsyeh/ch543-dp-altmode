@@ -1,0 +1,22 @@
+[
+  {
+    "file": "ch543-dp-sink.hex",
+    "bytes": 27282,
+    "sha256": "441067c6c85f74bda877b56c64ce2174f878277655b96f13ac7337e03c87cf81"
+  },
+  {
+    "file": "ch543-dp-sink.ihx",
+    "bytes": 23646,
+    "sha256": "af80f18c7d2cb91ecfc8fbad7c8a9b0ee52f4bb36059688087da60c9b043ff84"
+  },
+  {
+    "file": "ch543-dp-source.hex",
+    "bytes": 27282,
+    "sha256": "58d1c2577837023f2f9b789db059d3878f22e2ba02b1dc5d38a0a5e315af57d6"
+  },
+  {
+    "file": "ch543-dp-source.ihx",
+    "bytes": 23646,
+    "sha256": "4fd7c220568a84c41832fb5e2497aa2fc500267cf0116fcc9c4caa0c61656a57"
+  }
+]
