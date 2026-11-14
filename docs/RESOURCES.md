@@ -34,3 +34,11 @@ Flash 链接限制 14,336 B，剩余 4,423 B，保留通常的 ISP/EEPROM 区。
 早期开发构建出现9518/9904 B等不同结果，后来修复了缺失中断向量、增加启动检查并调整协议逻辑；本报告只描述以上最终快照。`make firmware` 在每次成功链接后打印各模块占用，并在build中追加resource-history.jsonl。
 
 本次没有真实CH543D或Keil C51测试。iRAM/xRAM/Flash分配满足链接约束，不等于已经验证所有时序、栈最高水位或USB/DP兼容性。
+
+## GitHub 独立环境复验
+
+提交 `d1cc95c` 的 [GitHub Actions 运行](https://github.com/zsyeh/ch543-dp-altmode/actions/runs/43655484284) 已成功，使用发行版 SDCC 4.2.0+dfsg-1。同样通过68项/26,564断言、7组PHY模型、ASan/UBSan、两个固件的向量与启动检查。
+
+两个镜像在该编译器下各占 **9,998 B Flash、187 B iRAM静态分配、3 B iRAM空洞、66 B栈区域、190 B xRAM**。模块code+const分别为wire194、pd3161、dp3515、PHY2277、board637、main122 B；各模块RAM分配与上表相同。4.2与4.5生成代码不同，4.5的28 B栈使用估计不能自动套用到4.2，CI只检查栈区域容量，没有实测最高水位。
+
+[实验版附件](https://github.com/zsyeh/ch543-dp-altmode/releases/tag/v0.1.0-experimental) 发布的是本地SDCC 4.5.0的9,913 B镜像；CI的4.2.0构建作为Actions artifact单独保存。
