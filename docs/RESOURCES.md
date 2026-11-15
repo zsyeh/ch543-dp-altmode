@@ -31,6 +31,12 @@ Board2 新增 xRAM 为 CH9445 状态8 B和时间扩展6 B，共14 B；HPD 捕获
 
 72 项协议测试 / 27,205 断言、7 组 PHY 模型、CH9445/I²C/Board2 HAL/完整协商模型与网表路由检查全部通过；全部 C 测试的 ASan/UBSan 通过。每次链接输出实际资源及栈估计，并保存 build 下资源历史。默认 Board2 仍因未确认 VBUS 电路而禁止 attach，不能把编译或仿真通过解读为原图可直接出图。
 
+## 当前提交的 GitHub 复验
+
+代码提交 `b429719` 的 [Actions 43658656642](https://github.com/zsyeh/ch543-dp-altmode/actions/runs/43658656642) 全部通过，SDCC 4.2.0+dfsg-1。Board2 Source/Sink 各为 Flash **11,122 B**、iRAM191 B+1 B空洞+64 B栈、xRAM204 B，生成汇编栈估计32 B；参考板各为Flash10,127 B、iRAM187 B+3 B空洞+66 B栈、xRAM190 B，栈估计30 B。两种编译器的数字分别来自实际链接，不能混用镜像哈希。
+
+[v0.2.0 Board2 实验版附件](https://github.com/zsyeh/ch543-dp-altmode/releases/tag/v0.2.0-board2-experimental) 是本地 SDCC4.5.0 的11,014 B受限镜像；CI产物另存在 Actions artifact。附件仍禁止PD attach，需先处理 BOARD2 文档中的真实电路问题。
+
 # 初版参考板资源记录（v0.1.0）
 
 2026-11-15，SDCC 4.5.0 #15242，`--model-small --opt-code-size`。两个镜像共用协议与HAL对象，只改变默认视频角色；不是两个删减后的单角色栈。
