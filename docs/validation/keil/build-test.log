@@ -1,0 +1,63 @@
+2026-11-15 | Windows | Arm Keil C51 9.61 package (evaluation)
+Release tag v0.2.0-board2-experimental: C51 rejected ISR prototypes (C141).
+After the compatibility fix:
+
+Target: board2-source (DEFAULT_DP_ROLE=1,BOARD2=1,BOARD2_VBUS_VERIFIED=0)
+C51 COMPILER V9.60.7.0 - SN: Eval Version
+A51 MACRO ASSEMBLER V8.2.7.0 - SN: Eval Version
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
+BL51 BANKED LINKER/LOCATER V6.22.4.0 - SN: Eval Version
+Program Size: data=164.0 xdata=204 code=9581
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    LIMIT:   0800H BYTES
+C51 compilation: 8 modules, zero errors; all OBJ files emitted.
+No OMF or HEX file emitted.
+
+Target: board2-sink (DEFAULT_DP_ROLE=2,BOARD2=1,BOARD2_VBUS_VERIFIED=0)
+C51 COMPILER V9.60.7.0 - SN: Eval Version
+A51 MACRO ASSEMBLER V8.2.7.0 - SN: Eval Version
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
+BL51 BANKED LINKER/LOCATER V6.22.4.0 - SN: Eval Version
+Program Size: data=164.0 xdata=204 code=9581
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    LIMIT:   0800H BYTES
+C51 compilation: 8 modules, zero errors; all OBJ files emitted.
+No OMF or HEX file emitted.
+
+Target: reference-source (DEFAULT_DP_ROLE=1)
+C51 COMPILER V9.60.7.0 - SN: Eval Version
+A51 MACRO ASSEMBLER V8.2.7.0 - SN: Eval Version
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
+BL51 BANKED LINKER/LOCATER V6.22.4.0 - SN: Eval Version
+Program Size: data=164.0 xdata=190 code=8803
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    LIMIT:   0800H BYTES
+C51 compilation: 6 modules, zero errors; all OBJ files emitted.
+No OMF or HEX file emitted.
+
+Target: reference-sink (DEFAULT_DP_ROLE=2)
+C51 COMPILER V9.60.7.0 - SN: Eval Version
+A51 MACRO ASSEMBLER V8.2.7.0 - SN: Eval Version
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
+BL51 BANKED LINKER/LOCATER V6.22.4.0 - SN: Eval Version
+Program Size: data=164.0 xdata=190 code=8803
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    LIMIT:   0800H BYTES
+C51 compilation: 6 modules, zero errors; all OBJ files emitted.
+No OMF or HEX file emitted.
+
+Warnings observed: C500 (evaluation license), C275 (unused parameter casts),
+L16 (three public integration APIs uncalled by main).
+
+Separate small programs with stub ISRs, assembled/linked/converted with Keil:
+Board2: 88 code bytes; reset and 4 interrupt vectors + startup bytes checked.
+Reference: 92 code bytes; reset and 5 interrupt vectors + startup bytes checked.
+Both fixtures rejected a corrupted USBPD jump with a valid Intel HEX checksum.
+
+Local Ubuntu 22.04 (WSL), GCC 11:
+make test: 72 protocol tests, 0 failures, 27205 assertions; 7 PHY model groups.
+CH9445, software I2C, Board2 HAL, 8 integration combinations and netlist check passed.
+make sanitize: all six executables passed ASan/UBSan.
+make firmware, SDCC 4.2.0 #13081: four HEX files produced.
+Board2: 11122 B code, 204 B xRAM; reference: 10127 B code, 190 B xRAM.
+All four passed the SDCC vector, early startup and static stack checks.

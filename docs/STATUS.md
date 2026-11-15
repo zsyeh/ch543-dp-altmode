@@ -23,7 +23,7 @@
 
 ## 已执行的本地验证
 
-2026-11-15 的[构建测试日志](validation/build-test.log)记录：PC 协议 Mock 共 **68 个用例、26564 条断言，0 失败**；直接编译真实 `ch543_phy.c` 并替换 SFR 的寄存器模型共 **7 组通过**；两组测试均完成 AddressSanitizer/UndefinedBehaviorSanitizer 运行。Source/Sink 默认角色的 SDCC 镜像都实际编译并通过最终 IHX 的 6 项中断/复位向量及早期启动 hook 检查。
+2026-11-15 Board2 版通过 **72 项协议测试、27,205 条断言、7 组 PHY 寄存器模型**，以及 CH9445、软件 I²C、Board2 HAL、完整协商模型和网表检查。六个 C 测试程序均通过 ASan/UBSan。SDCC 构建覆盖两种板型的 Source/Sink 四个目标，各自通过复位、中断向量和早期启动 hook 检查。[Board2 构建测试日志](validation/board2/build-test.log)
 
 寄存器模型检查实际 C 驱动中的 CRC、GoodCRC、事件和缓冲处理，不模拟 CH543 外设的真实内部行为。协议 Mock 与寄存器模型仍属于软件验证，两者均不能测量 CC 波形或 ISR 延迟。静态栈估计见 [STACK.md](STACK.md)；测试覆盖映射见 [tests/README.md](../tests/README.md)。
 
@@ -34,9 +34,9 @@
 3. USB4、Thunderbolt、DPAM 2.x/UHBR、PPS/EPR、FRS、PR_SWAP、完整 DRP 电源切换。
 4. 全功能 PD policy engine：全部规范计时、供电 Source Hard Reset 的 VBUS 关闭/放电/恢复序列、所有电源异常和互操作策略。
 5. 全部 DP 模式组合：A/B/F、动态视频角色切换、多个本地模式、远端所有 mode/cable 类型。
-6. 具体商品 MUX 的 I2C/SPI 寄存器驱动、PCB 引脚/极性/信号完整性验证、硬件故障反馈。参考 GPIO 控制需在真实板上适配。
+6. CH9445F 实物 I²C、PCB 引脚极性、信号完整性和硬件故障反馈验证。参考 GPIO 控制需在真实板上适配。
 7. 正式 USB VID/PID/认证身份与 USB-IF/VESA CTS。零 VID/PID 仅实验占位。
-8. Keil C51 实际编译验证；有存储限定词适配不等于已经通过 Keil 构建。
+8. 正式授权下的 Keil 固件链接、最终镜像检查及上板验证。四个目标已通过 C51 源码编译和 A51 启动汇编，评估版链接器在生成完整镜像前触发 2 KiB 限制。见 [Keil 构建和验证记录](KEIL.md)。
 9. USB Billboard Device Class 的枚举及失败状态呈现。需要 Billboard 的产品形态须另行实现，不能据本工程的 VDM 应答推断完整 USB 类功能。
 
 ## 必须上板验证的项目
@@ -54,6 +54,6 @@
 
 ## 继续上板的顺序
 
-先保持 MUX 禁用，验证 CC 与 VBUS 检测，再用 PD 分析仪测标准包、CRC、GoodCRC 和重复消息；确认最坏 7-DO 包的应答时间。然后只建立 5 V 合同和 Discover Identity，逐步放开 SVID/Mode/Enter/Status。最后接入 MUX，检查 Configure ACK 前后控制线和 HPD，再接视频设备验证 C/D/E 及两个方向。两种视频角色需各自完整测试，不能用一个方向的视频成功替代另一方向。
+先保持 MUX 禁用，验证 CC 与 VBUS 检测，再用 PD 分析仪测标准包、CRC、GoodCRC 和重复消息；确认最坏 7-DO 包的应答时间。然后只建立 5 V 合同和 Discover Identity，逐步放开 SVID/Mode/Enter/Status。最后接入 MUX，检查 Configure ACK 前后控制线和 HPD，再接视频设备验证两种视频角色和正反插。Board2 只验证 Pin Assignment D，参考板按其硬件接线验证 C/D/E。
 
 审计证据与来源见 [AUDIT.md](AUDIT.md)；板级连接要求见 [HARDWARE.md](HARDWARE.md)。

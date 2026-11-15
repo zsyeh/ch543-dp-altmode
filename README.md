@@ -37,7 +37,7 @@ make firmware
 
 PC 仿真运行的是相同的 C 协议核心。`make test` 包含协议帧/状态断言和真实 PHY 的 SFR 功能模型；`make sanitize` 使用 ASan/UBSan。它们没有模拟 8051 指令时钟或 BMC 电气波形。测试覆盖映射见 [tests/README](tests/README.md)，实际运行记录见 [validation](docs/validation/)。
 
-Keil C51 的存储限定和中断语法提供了适配宏，但本机未安装 Keil，没有实际构建记录或可声称已验证的 Keil 工程。**这些 HEX 不能烧到 AT89C52 使用**：8051 指令集相近不代表 PD 外设、SFR、时钟和存储布局兼容。
+Windows 上可通过 [Keil C51 构建说明](docs/KEIL.md) 编译这四个目标。实测 C51 已生成全部目标文件，A51 已汇编 CH543 启动代码。完整固件在 BL51 评估版触发 2 KiB 上限（L250），生成 Keil HEX 需要正式 C51 授权。固件的应用范围是 CH543，烧录前须核对板型和供电约束。
 
 ## 配置与接入
 
@@ -62,6 +62,7 @@ Keil C51 的存储限定和中断语法提供了适配宏，但本机未安装 K
 | [PROTOCOL](docs/PROTOCOL.md) | 状态迁移、角色及恢复语义 |
 | [BRINGUP](docs/BRINGUP.md) | 从最小 VDM 收发到真实视频的上板验证步骤 |
 | [RESOURCES](docs/RESOURCES.md), [STACK](docs/STACK.md) | 实际资源分配、栈估算与限制 |
+| [KEIL](docs/KEIL.md), `tools/build_keil.ps1` | Windows 下的 C51 构建、链接限制和验证记录 |
 | [AUDIT](docs/AUDIT.md), [SOURCES.json](docs/SOURCES.json) | 芯片审计、来源和固定版本哈希 |
 
 资料缓存获取：`python3 tools/fetch_sources.py`，构建不依赖下载 SDK。独立实现采用 MIT 许可，第三方资料边界见 [THIRD_PARTY](docs/THIRD_PARTY.md)。
