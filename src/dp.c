@@ -28,13 +28,19 @@ static uint8_t complementary(uint16_t s) {
  uint8_t con=(uint8_t)(s&3u);
  return pd.video_role==DP_SOURCE ? (con&DP_SINK) : (con&DP_SOURCE);
 }
-static void apply(void) {
- dp_mux_set(pd.pin,pd.orientation,pd.video_role);
- dp_aux_set(1,pd.orientation); pd.dp=DP_ACTIVE;
+static void activated(void) {
+ pd.dp=DP_ACTIVE;
  if(pd.video_role==DP_SOURCE) {
   dp_hpd_set(0,0); pd.hpd_deadline=system_get_tick()+4u; pd.hpd_pending=1;
  }
  else pd.attention=1;
+}
+static void apply(void) {
+ dp_mux_set(pd.pin,pd.orientation,pd.video_role);
+ dp_aux_set(1,pd.orientation);
+ pd.dp=DP_MUX_WAIT; pd.hpd_deadline=system_get_tick()+100u;
+ pd.hpd_pending=(pd.video_role==DP_SOURCE)?1u:0u;
+ if(dp_mux_status()==MUX_READY) activated();
 }
 static void request(uint8_t cmd) {
  uint32_t v=0;
@@ -56,7 +62,7 @@ static void request(uint8_t cmd) {
  pd.pending_cmd=cmd; pd.vdm_wait=2; pd.job_action=AFTER_VDM;
 }
 void dp_begin(void) {
- if(!pd.contract || (pd.entered && pd.dp==DP_ACTIVE)) return;
+ if(!pd.contract || (pd.entered && (pd.dp==DP_ACTIVE || pd.dp==DP_MUX_WAIT))) return;
  if(pd.data_role) {
   pd.busy_count=0;
   if(pd.entered) { pd.dp=DP_STATUS_WAIT; request(VDM_STATUS); }
@@ -236,6 +242,11 @@ void dp_tx_complete(uint8_t action) {
 }
 void dp_poll(void) {
  uint8_t h;
+ if(pd.dp==DP_MUX_WAIT) {
+  h=dp_mux_status();
+  if(h==MUX_FAULT || pd_due(pd.hpd_deadline)) { fail(ERR_HARDWARE); return; }
+  if(h==MUX_READY) activated();
+ }
  if(pd.hpd_pending && pd.dp==DP_ACTIVE && pd_due(pd.hpd_deadline)) {
   pd.hpd_pending=0;
   dp_hpd_set((pd.partner_status&ST_HPD)?1:0,(pd.partner_status&ST_IRQ)?1:0);

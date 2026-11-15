@@ -10,7 +10,14 @@
 #ifndef PREFER_USB3
 #define PREFER_USB3 0
 #endif
-#define LOCAL_PINS 0x1cu /* C, D, E: routed by the board */
+#ifdef BOARD2
+#define LOCAL_PINS 0x08u /* EPRO Board2 can route D only, in both directions. */
+#ifndef BOARD2_VBUS_VERIFIED
+#define BOARD2_VBUS_VERIFIED 0 /* replace R5 input by a qualified 5V-good circuit */
+#endif
+#else
+#define LOCAL_PINS 0x1cu /* C, D, E: reference board decoder */
+#endif
 #define PD_CURRENT_10MA 50u /* conservative 5 V / 500 mA */
 #define PD_MAX_FRAME 30u
 #define PD_DMA_SIZE 128u

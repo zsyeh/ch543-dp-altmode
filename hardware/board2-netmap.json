@@ -1,0 +1,321 @@
+{
+  "components": {
+    "C41": {
+      "pads": {
+        "1": "SRXP",
+        "2": "STXP#"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C42": {
+      "pads": {
+        "1": "SRXN",
+        "2": "STXN#"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C43": {
+      "pads": {
+        "1": "DP0P#",
+        "2": "SNK_DP0P"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C44": {
+      "pads": {
+        "1": "DP0N#",
+        "2": "SNK_DP0N"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C45": {
+      "pads": {
+        "1": "DP1P#",
+        "2": "SNK_DP1P"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C46": {
+      "pads": {
+        "1": "DP1N#",
+        "2": "SNK_DP1N"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C47": {
+      "pads": {
+        "1": "STXP",
+        "2": "SRXP#"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C48": {
+      "pads": {
+        "1": "STXN",
+        "2": "SRXN#"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C49": {
+      "pads": {
+        "1": "DP2P#",
+        "2": "SRC_DP1N"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C53": {
+      "pads": {
+        "1": "DP2N#",
+        "2": "SRC_DP1P"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C54": {
+      "pads": {
+        "1": "DP3P#",
+        "2": "SRC_DP0N"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C55": {
+      "pads": {
+        "1": "DP3N#",
+        "2": "SRC_DP0P"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C56": {
+      "pads": {
+        "1": "AUXP#",
+        "2": "AUXP"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "C57": {
+      "pads": {
+        "1": "AUXN#",
+        "2": "AUXN"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "PORT1": {
+      "pads": {
+        "25": "GND",
+        "A1": "GND",
+        "A10": "RX2N",
+        "A11": "RX2P",
+        "A12": "GND",
+        "A2": "TX1P",
+        "A3": "TX1N",
+        "A4": "VBUS",
+        "A5": "CH_CC1",
+        "A6": "SDP",
+        "A7": "SDN",
+        "A8": "SBU1",
+        "A9": "VBUS",
+        "B1": "GND",
+        "B10": "RX1N",
+        "B11": "RX1P",
+        "B12": "GND",
+        "B2": "TX2P",
+        "B3": "TX2N",
+        "B4": "VBUS",
+        "B5": "CH_CC2",
+        "B6": "SDP",
+        "B7": "SDN",
+        "B8": "SBU2",
+        "B9": "VBUS"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "PORT3": {
+      "pads": {
+        "1": "$13N186",
+        "10": "GND",
+        "11": "GND",
+        "2": "SDN",
+        "3": "SDP",
+        "4": "GND",
+        "5": "SRXN#",
+        "6": "SRXP#",
+        "7": "GND",
+        "8": "STXN#",
+        "9": "STXP#"
+      },
+      "schematic_add_into_bom": "yes"
+    },
+    "R1": {
+      "pads": {
+        "1": "CH_SCL",
+        "2": "+3.3V"
+      }
+    },
+    "R2": {
+      "pads": {
+        "1": "AUXN",
+        "2": "GND"
+      },
+      "schematic_add_into_bom": "no"
+    },
+    "R3": {
+      "pads": {
+        "1": "CH_SDA",
+        "2": "+3.3V"
+      }
+    },
+    "R4": {
+      "pads": {
+        "1": "AUXP",
+        "2": "+3.3V"
+      },
+      "schematic_add_into_bom": "no"
+    },
+    "R5": {
+      "pads": {
+        "1": "$13N492",
+        "2": "VBUS"
+      }
+    },
+    "R52": {
+      "pads": {
+        "1": "HDP1",
+        "2": "$13N499"
+      }
+    },
+    "R6": {
+      "pads": {
+        "1": "ROLE",
+        "2": "+3.3V"
+      },
+      "schematic_add_into_bom": "no"
+    },
+    "R7": {
+      "pads": {
+        "1": "VBUS",
+        "2": "+5V"
+      },
+      "schematic_add_into_bom": "no"
+    },
+    "R70": {
+      "pads": {
+        "1": "$13N218",
+        "2": "GND"
+      }
+    },
+    "R71": {
+      "pads": {
+        "1": "AUXN",
+        "2": "+3.3V"
+      },
+      "schematic_add_into_bom": "no"
+    },
+    "R72": {
+      "pads": {
+        "1": "AUXP",
+        "2": "GND"
+      },
+      "schematic_add_into_bom": "no"
+    },
+    "U10": {
+      "pads": {
+        "1": "+3.3V",
+        "10": "CH_TXD",
+        "11": "CH_RXD",
+        "12": "CH_CC2",
+        "13": "CH_CC1",
+        "14": "ROLE",
+        "15": "PWREN#",
+        "16": "$13N492",
+        "17": "CH_DP",
+        "18": "CH_DM",
+        "19": "$13N487",
+        "2": "GND",
+        "20": "$13N489",
+        "21": "GND",
+        "3": "+3.3V",
+        "4": "$13N499",
+        "5": "CH_SDA",
+        "6": "CH_SCL",
+        "7": "MCU_SCL",
+        "8": "MCU_SDA",
+        "9": "CH_RST"
+      }
+    },
+    "U11": {
+      "pads": {
+        "1": "TX1P",
+        "10": "SBU1",
+        "11": "SBU2",
+        "12": "AUXP",
+        "13": "AUXN",
+        "14": "",
+        "15": "",
+        "16": "",
+        "17": "SRC_DP0N",
+        "18": "SRC_DP0P",
+        "19": "SRC_DP1N",
+        "2": "TX1N",
+        "20": "SRC_DP1P",
+        "21": "SNK_DP0N",
+        "22": "SNK_DP0P",
+        "23": "SNK_DP1N",
+        "24": "SNK_DP1P",
+        "25": "$13N218",
+        "26": "STXP",
+        "27": "STXN",
+        "28": "SRXP",
+        "29": "SRXN",
+        "3": "TX2P",
+        "30": "+3.3V",
+        "31": "RX1P",
+        "32": "RX1N",
+        "33": "GND",
+        "4": "TX2N",
+        "5": "RX2P",
+        "6": "RX2N",
+        "7": "",
+        "8": "CH_SCL",
+        "9": "CH_SDA"
+      }
+    },
+    "U6": {
+      "pads": {
+        "1": "VBUS",
+        "2": "GND",
+        "3": "",
+        "4": "PWREN#",
+        "5": "$13N435",
+        "6": "+5V"
+      }
+    },
+    "USB2": {
+      "pads": {
+        "1": "DP0P#",
+        "10": "DP3P#",
+        "11": "GND",
+        "12": "DP3N#",
+        "13": "$13N239",
+        "14": "$13N238",
+        "15": "AUXP#",
+        "16": "GND",
+        "17": "AUXN#",
+        "18": "HDP1",
+        "19": "GND",
+        "2": "GND",
+        "20": "$13N190",
+        "21": "GND",
+        "22": "GND",
+        "23": "GND",
+        "24": "GND",
+        "3": "DP0N#",
+        "4": "DP1P#",
+        "5": "GND",
+        "6": "DP1N#",
+        "7": "DP2P#",
+        "8": "GND",
+        "9": "DP2N#"
+      }
+    }
+  },
+  "source_sha256": "a08d17972b127bb7f14f6917210a8e3a69d90c5b061ff7bd5d5de708ade6064d"
+}

@@ -70,3 +70,14 @@ PC 的时间推进为确定性的毫秒事件；不模拟 USB PD 总线冲突和
 - 区分正常发送、GoodCRC、Reset 完成事件，并验证接收背压和拔线取消 ACK。
 
 测试明确模拟 FIFO 清除、SFR/位寄存器标志同步及 DMA，不模拟硅片或 8051 指令周期。能证明这些软件分支的功能，不能证明 W0C 寄存器、电气 CRC 顺序和 GoodCRC 实际时限。最终 HEX 还由 `tools/check_vectors.py` 检查 ISR 和早期启动入口机器码。
+
+## CH9445 / Board2 扩展
+
+- `test_protocol.c` 新增四项：延迟提交及待提交 IRQ 保留、MUX 故障、100 ms 超时、取消提交。当前共 72 项；精确断言数以构建日志为准。
+- `test_ch9445.c` 执行真实驱动：四种物理路由，17 个事务阶段 NACK，八个读回错误，18 个取消位置，拒绝 C/E，初始残留路由隔离。
+- `test_i2c.c` 执行真实软件 I²C：观察逐位输出，验证 0x90/0x91、寄存器/数据、重复 START、读末字节 NACK、各阶段 NACK、STOP 失败、总线卡住时有界返回。
+- `test_board2_hal.c` 执行实际 HAL 的 SFR 功能模型：GPIO/PWREN#、默认 VBUS 防护、140,000 次计时回卷、CAP1 的 HPD IRQ 宽度边界、输出 IRQ 与角色方向。
+- `test_board2_protocol.c` 把实际协议和 CH9445 驱动连接：USB DFP/UFP × 视频 Source/Sink × CC1/CC2 共八条协商路径；检查报文字段、D-only 能力、C/E NAK、ACK/GoodCRC 前不切换、读回前不拉高 HPD及17个拔线位置。
+- `tools/check_board2_routes.py` 独立从 EPRO 提取的焊盘连接推导路由，不直接使用驱动的路由常量生成期望结果。
+
+以上均为功能模型，外设时序、实际模拟开关导通和真实视频链路未验证。所有新增 C 测试均进入 `make test` 与 `make sanitize`。

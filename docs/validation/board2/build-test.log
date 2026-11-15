@@ -1,0 +1,326 @@
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O2 src/wire.c src/pd.c src/dp.c hal/mock.c tests/test_protocol.c -o build/test_protocol
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O2 tests/test_phy.c -o build/test_phy
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests  -O2 tests/test_ch9445.c hal/ch9445.c -o build/test_ch9445
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DI2C_TEST -O2 tests/test_i2c.c hal/soft_i2c.c -o build/test_i2c
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -O2 tests/test_board2_hal.c  -o build/test_board2_hal
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -DMOCK_CH9445 -O2 tests/test_board2_protocol.c src/wire.c src/pd.c src/dp.c hal/mock.c hal/ch9445.c -o build/test_board2_protocol
+./build/test_protocol
+PASS dfp_source
+PASS dfp_sink
+PASS ufp_source
+PASS ufp_sink
+PASS multifunction
+PASS pin_e
+PASS no_svid
+PASS enter_nak
+PASS busy_retry
+PASS busy_exhaustion
+PASS timeout
+PASS pin_mismatch
+PASS reject_configure
+PASS hpd_source
+PASS hpd_sink
+PASS detach
+PASS detach_active
+PASS soft_reset
+PASS hard_reset
+PASS duplicate
+PASS illegal_status
+PASS illegal_header
+PASS illegal_roles
+PASS bad_length
+PASS retry
+PASS retry_exhaustion
+PASS exit_dfp
+PASS exit_ufp
+PASS active_config_nak
+PASS power_source
+PASS no_power
+PASS source_gate
+PASS cap_current_limit
+PASS bad_cap
+PASS role_config
+PASS tick_wrap
+PASS wrong_response
+PASS attention_usb
+PASS attention_exit
+PASS dr_swap_active
+PASS hard_reset_vbus
+PASS soft_reset_dfp
+PASS ufp_usb_config
+PASS disconnect_attention
+PASS config_timeout
+PASS malformed_busy
+PASS svid_low_half
+PASS mode_object_two
+PASS plug_mode
+PASS no_vdm_before_contract
+PASS generated_malformed_frames
+PASS dfp_sink_status_hpd
+PASS ufp_source_status_hpd
+PASS ufp_source_exit_request
+PASS ufp_ignores_dfp_attention
+PASS dfp_status_reserved_zero
+PASS hpd_guard_irq_once
+PASS hpd_guard_detach
+PASS hpd_guard_latest_level
+PASS hard_reset_delayed_vbus_cycle
+PASS hard_reset_hold_timeout
+PASS ufp_status_disconnected
+PASS pending_irq_preserved
+PASS pending_irq_cleared_by_low
+PASS phy_tx_end_missing
+PASS status_busy_preserves_irq
+PASS enter_timeout_boundary
+PASS exit_timeout_boundary
+PASS mux_delayed
+PASS mux_fault
+PASS mux_timeout
+PASS mux_cancel
+72 tests, 0 failures, 27205 assertions (PC Mock HAL; no hardware validation)
+./build/test_phy
+PHY register model: 7 groups passed (functional only; no hardware/timing claim)
+./build/test_ch9445
+CH9445: 4 physical routes, 17 NACK stages, 8 readback faults, 18 cancellations, invalid pins and stale boot passed (model)
+./build/test_i2c
+Software I2C: wire bits, repeated START, final NACK, write/read NACKs, failed STOP and bounded stuck lines passed (pin model)
+./build/test_board2_hal
+Board2 HAL: GPIO safety, disabled VBUS guard, 140000 clock samples/wrap, CAP1 HPD boundaries, IRQ output and role direction passed (model)
+./build/test_board2_protocol
+Board2 integration: 8 USB/video/orientation negotiations, C/E NAKs, delayed MUX/HPD, 17 detach phases passed (models)
+python3 tools/check_board2_routes.py
+EPRO netlist: all 4 D routes derived; C/E not routable; I2C pin mapping and R7 BOM flag checked
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer src/wire.c src/pd.c src/dp.c hal/mock.c tests/test_protocol.c -o build/test_protocol_sanitize
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_phy.c -o build/test_phy_sanitize
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests  -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_ch9445.c hal/ch9445.c -o build/test_ch9445_sanitize
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DI2C_TEST -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_i2c.c hal/soft_i2c.c -o build/test_i2c_sanitize
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_board2_hal.c  -o build/test_board2_hal_sanitize
+gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -DMOCK_CH9445 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_board2_protocol.c src/wire.c src/pd.c src/dp.c hal/mock.c hal/ch9445.c -o build/test_board2_protocol_sanitize
+ASAN_OPTIONS=detect_leaks=1 ./build/test_protocol_sanitize
+PASS dfp_source
+PASS dfp_sink
+PASS ufp_source
+PASS ufp_sink
+PASS multifunction
+PASS pin_e
+PASS no_svid
+PASS enter_nak
+PASS busy_retry
+PASS busy_exhaustion
+PASS timeout
+PASS pin_mismatch
+PASS reject_configure
+PASS hpd_source
+PASS hpd_sink
+PASS detach
+PASS detach_active
+PASS soft_reset
+PASS hard_reset
+PASS duplicate
+PASS illegal_status
+PASS illegal_header
+PASS illegal_roles
+PASS bad_length
+PASS retry
+PASS retry_exhaustion
+PASS exit_dfp
+PASS exit_ufp
+PASS active_config_nak
+PASS power_source
+PASS no_power
+PASS source_gate
+PASS cap_current_limit
+PASS bad_cap
+PASS role_config
+PASS tick_wrap
+PASS wrong_response
+PASS attention_usb
+PASS attention_exit
+PASS dr_swap_active
+PASS hard_reset_vbus
+PASS soft_reset_dfp
+PASS ufp_usb_config
+PASS disconnect_attention
+PASS config_timeout
+PASS malformed_busy
+PASS svid_low_half
+PASS mode_object_two
+PASS plug_mode
+PASS no_vdm_before_contract
+PASS generated_malformed_frames
+PASS dfp_sink_status_hpd
+PASS ufp_source_status_hpd
+PASS ufp_source_exit_request
+PASS ufp_ignores_dfp_attention
+PASS dfp_status_reserved_zero
+PASS hpd_guard_irq_once
+PASS hpd_guard_detach
+PASS hpd_guard_latest_level
+PASS hard_reset_delayed_vbus_cycle
+PASS hard_reset_hold_timeout
+PASS ufp_status_disconnected
+PASS pending_irq_preserved
+PASS pending_irq_cleared_by_low
+PASS phy_tx_end_missing
+PASS status_busy_preserves_irq
+PASS enter_timeout_boundary
+PASS exit_timeout_boundary
+PASS mux_delayed
+PASS mux_fault
+PASS mux_timeout
+PASS mux_cancel
+72 tests, 0 failures, 27205 assertions (PC Mock HAL; no hardware validation)
+ASAN_OPTIONS=detect_leaks=1 ./build/test_phy_sanitize
+PHY register model: 7 groups passed (functional only; no hardware/timing claim)
+ASAN_OPTIONS=detect_leaks=1 ./build/test_ch9445_sanitize
+CH9445: 4 physical routes, 17 NACK stages, 8 readback faults, 18 cancellations, invalid pins and stale boot passed (model)
+ASAN_OPTIONS=detect_leaks=1 ./build/test_i2c_sanitize
+Software I2C: wire bits, repeated START, final NACK, write/read NACKs, failed STOP and bounded stuck lines passed (pin model)
+ASAN_OPTIONS=detect_leaks=1 ./build/test_board2_hal_sanitize
+Board2 HAL: GPIO safety, disabled VBUS guard, 140000 clock samples/wrap, CAP1 HPD boundaries, IRQ output and role direction passed (model)
+ASAN_OPTIONS=detect_leaks=1 ./build/test_board2_protocol_sanitize
+Board2 integration: 8 USB/video/orientation negotiations, C/E NAKs, delayed MUX/HPD, 17 detach phases passed (models)
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/wire.c -o build/target/wire.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/pd.c -o build/target/pd.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/dp.c -o build/target/dp.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c hal/ch543_phy.c -o build/target/ch543_phy.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c hal/ch543_board.c -o build/target/ch543_board.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DDEFAULT_DP_ROLE=1 -c src/main.c -o build/target/main-source.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/target/main-source.rel build/target/wire.rel build/target/pd.rel build/target/dp.rel build/target/ch543_phy.rel build/target/ch543_board.rel -o build/ch543-dp-source.ihx
+python3 tools/check_vectors.py build/ch543-dp-source.ihx
+build/ch543-dp-source.ihx: all 6 vectors + early startup verified: Reset@0000->009c, INT0@0003->2213, Timer0@000b->2080, Timer1@001b->2289, Timer2@002b->2135, USBPD@0053->1e27
+python3 tools/memory_report.py build/ch543-dp-source.ihx
+ch543-dp-source.ihx: Flash 10038/14336 B; iRAM occupied 187 B + holes 3 B; stack 0xBE..0xFF = 66 B; xRAM 190/256 B.
+
+| Module | code+const | data | idata | xdata | overlay* | bits |
+|---|---:|---:|---:|---:|---:|---:|
+| wire | 195 | 0 | 0 | 0 | 4 | 0 |
+| pd | 3137 | 24 | 67 | 60 | 8 | 0 |
+| dp | 3549 | 45 | 0 | 0 | 4 | 2 |
+| ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
+| ch543_board | 630 | 5 | 0 | 0 | 2 | 0 |
+| main-source | 189 | 0 | 0 | 0 | 0 | 0 |
+
+* Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+
+python3 tools/estimate_stack.py build/target --image build/ch543-dp-source.ihx
+{
+  "functions": 69,
+  "foreground": 14,
+  "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+  "low_isr_with_return": 4,
+  "pd_isr_with_return": 12,
+  "combined_estimate": 30,
+  "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+  "capacity": 66,
+  "estimated_headroom": 36
+}
+packihx build/ch543-dp-source.ihx > build/ch543-dp-source.hex
+packihx: read 333 lines, wrote 640: OK.
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DDEFAULT_DP_ROLE=2 -c src/main.c -o build/target/main-sink.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/target/main-sink.rel build/target/wire.rel build/target/pd.rel build/target/dp.rel build/target/ch543_phy.rel build/target/ch543_board.rel -o build/ch543-dp-sink.ihx
+python3 tools/check_vectors.py build/ch543-dp-sink.ihx
+build/ch543-dp-sink.ihx: all 6 vectors + early startup verified: Reset@0000->009c, INT0@0003->2213, Timer0@000b->2080, Timer1@001b->2289, Timer2@002b->2135, USBPD@0053->1e27
+python3 tools/memory_report.py build/ch543-dp-sink.ihx
+ch543-dp-sink.ihx: Flash 10038/14336 B; iRAM occupied 187 B + holes 3 B; stack 0xBE..0xFF = 66 B; xRAM 190/256 B.
+
+| Module | code+const | data | idata | xdata | overlay* | bits |
+|---|---:|---:|---:|---:|---:|---:|
+| wire | 195 | 0 | 0 | 0 | 4 | 0 |
+| pd | 3137 | 24 | 67 | 60 | 8 | 0 |
+| dp | 3549 | 45 | 0 | 0 | 4 | 2 |
+| ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
+| ch543_board | 630 | 5 | 0 | 0 | 2 | 0 |
+| main-sink | 189 | 0 | 0 | 0 | 0 | 0 |
+
+* Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+
+python3 tools/estimate_stack.py build/target --image build/ch543-dp-sink.ihx
+{
+  "functions": 69,
+  "foreground": 14,
+  "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+  "low_isr_with_return": 4,
+  "pd_isr_with_return": 12,
+  "combined_estimate": 30,
+  "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+  "capacity": 66,
+  "estimated_headroom": 36
+}
+packihx build/ch543-dp-sink.ihx > build/ch543-dp-sink.hex
+packihx: read 333 lines, wrote 640: OK.
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c src/wire.c -o build/board2/target/wire.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c src/pd.c -o build/board2/target/pd.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c src/dp.c -o build/board2/target/dp.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/ch543_phy.c -o build/board2/target/ch543_phy.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/ch543_board2.c -o build/board2/target/ch543_board2.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/ch9445.c -o build/board2/target/ch9445.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/soft_i2c.c -o build/board2/target/soft_i2c.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -DDEFAULT_DP_ROLE=1 -c src/main.c -o build/board2/target/main-source.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/board2/target/main-source.rel build/board2/target/wire.rel build/board2/target/pd.rel build/board2/target/dp.rel build/board2/target/ch543_phy.rel build/board2/target/ch543_board2.rel build/board2/target/ch9445.rel build/board2/target/soft_i2c.rel -o build/board2/ch543-dp-source.ihx
+python3 tools/check_vectors.py build/board2/ch543-dp-source.ihx --board2
+build/board2/ch543-dp-source.ihx: all 5 vectors + early startup verified: Reset@0000->009c, Timer0@000b->207f, Timer1@001b->226c, Timer2@002b->21fa, USBPD@0053->1e26
+python3 tools/memory_report.py build/board2/ch543-dp-source.ihx
+ch543-dp-source.ihx: Flash 11014/14336 B; iRAM occupied 191 B + holes 1 B; stack 0xC0..0xFF = 64 B; xRAM 204/256 B.
+
+| Module | code+const | data | idata | xdata | overlay* | bits |
+|---|---:|---:|---:|---:|---:|---:|
+| wire | 195 | 0 | 0 | 0 | 4 | 0 |
+| pd | 3137 | 24 | 67 | 60 | 8 | 0 |
+| dp | 3548 | 45 | 0 | 0 | 4 | 2 |
+| ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
+| ch543_board2 | 606 | 3 | 2 | 6 | 1 | 0 |
+| ch9445 | 570 | 2 | 0 | 8 | 2 | 0 |
+| soft_i2c | 431 | 2 | 0 | 0 | 1 | 3 |
+| main-source | 189 | 0 | 0 | 0 | 0 | 0 |
+
+* Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+
+python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-dp-source.ihx
+{
+  "functions": 77,
+  "foreground": 16,
+  "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+  "low_isr_with_return": 4,
+  "pd_isr_with_return": 12,
+  "combined_estimate": 32,
+  "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+  "capacity": 64,
+  "estimated_headroom": 32
+}
+packihx build/board2/ch543-dp-source.ihx > build/board2/ch543-dp-source.hex
+packihx: read 365 lines, wrote 702: OK.
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -DDEFAULT_DP_ROLE=2 -c src/main.c -o build/board2/target/main-sink.rel
+sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/board2/target/main-sink.rel build/board2/target/wire.rel build/board2/target/pd.rel build/board2/target/dp.rel build/board2/target/ch543_phy.rel build/board2/target/ch543_board2.rel build/board2/target/ch9445.rel build/board2/target/soft_i2c.rel -o build/board2/ch543-dp-sink.ihx
+python3 tools/check_vectors.py build/board2/ch543-dp-sink.ihx --board2
+build/board2/ch543-dp-sink.ihx: all 5 vectors + early startup verified: Reset@0000->009c, Timer0@000b->207f, Timer1@001b->226c, Timer2@002b->21fa, USBPD@0053->1e26
+python3 tools/memory_report.py build/board2/ch543-dp-sink.ihx
+ch543-dp-sink.ihx: Flash 11014/14336 B; iRAM occupied 191 B + holes 1 B; stack 0xC0..0xFF = 64 B; xRAM 204/256 B.
+
+| Module | code+const | data | idata | xdata | overlay* | bits |
+|---|---:|---:|---:|---:|---:|---:|
+| wire | 195 | 0 | 0 | 0 | 4 | 0 |
+| pd | 3137 | 24 | 67 | 60 | 8 | 0 |
+| dp | 3548 | 45 | 0 | 0 | 4 | 2 |
+| ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
+| ch543_board2 | 606 | 3 | 2 | 6 | 1 | 0 |
+| ch9445 | 570 | 2 | 0 | 8 | 2 | 0 |
+| soft_i2c | 431 | 2 | 0 | 0 | 1 | 3 |
+| main-sink | 189 | 0 | 0 | 0 | 0 | 0 |
+
+* Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+
+python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-dp-sink.ihx
+{
+  "functions": 77,
+  "foreground": 16,
+  "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+  "low_isr_with_return": 4,
+  "pd_isr_with_return": 12,
+  "combined_estimate": 32,
+  "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+  "capacity": 64,
+  "estimated_headroom": 32
+}
+packihx build/board2/ch543-dp-sink.ihx > build/board2/ch543-dp-sink.hex
+packihx: read 365 lines, wrote 702: OK.

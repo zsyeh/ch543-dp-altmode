@@ -16,3 +16,10 @@ jobs:
             build/*.map
             build/*.mem
             build/*.resources.*
+            build/*.stack.json
+            build/board2/*.hex
+            build/board2/*.ihx
+            build/board2/*.map
+            build/board2/*.mem
+            build/board2/*.resources.*
+            build/board2/*.stack.json

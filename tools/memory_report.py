@@ -20,6 +20,8 @@ assert stack and flash and xram
 modules = []
 names = ['wire', 'pd', 'dp', 'ch543_phy', 'ch543_board',
          'main-source' if 'source' in p.stem else 'main-sink']
+if p.parent.name == 'board2':
+    names[4:5] = ['ch543_board2', 'ch9445', 'soft_i2c']
 for name in names:
     rel = (p.parent / 'target' / (name + '.rel')).read_text()
     areas = collections.Counter()

@@ -8,6 +8,8 @@
 
 static volatile uint16_t tick_ms;
 static volatile uint8_t hpd_level, hpd_irq, hpd_timer;
+void hal_poll(void) { }
+uint8_t dp_mux_status(void) { return MUX_READY; }
 /* hpd_timer: 0 idle, 1 measuring sink low, 2 generating source IRQ,
  * 3 establishing a high level before an IRQ received with the initial high. */
 

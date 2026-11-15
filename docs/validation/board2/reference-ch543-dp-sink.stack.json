@@ -1,0 +1,11 @@
+{
+  "functions": 69,
+  "foreground": 14,
+  "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+  "low_isr_with_return": 4,
+  "pd_isr_with_return": 12,
+  "combined_estimate": 30,
+  "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+  "capacity": 66,
+  "estimated_headroom": 36
+}

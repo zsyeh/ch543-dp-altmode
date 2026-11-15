@@ -556,6 +556,35 @@ static void test_exit_timeout_boundary(void) {
  CHECK(pd.entered); CHECK(!pd.pending_cmd); CHECK(!pd_request_data_swap()); safe();
  mock_event(PHY_RESET); CHECK(!pd.entered); CHECK(pd.dp==DP_IDLE); safe();
 }
+static void test_mux_delayed(void) {
+ to_config(1,0,0x82); mock.mux_pending=1;
+ vdm(0xff01,17,1,1,1,0); CHECK(pd.dp==DP_MUX_WAIT);
+ CHECK(!mock.hpd_output); CHECK(pd.hpd_pending);
+ mock_advance(20); CHECK(pd.dp==DP_MUX_WAIT); CHECK(!mock.hpd_output);
+ vdm(0xff01,6,0,1,2,0x182); CHECK(pd.partner_status&0x100u);
+ vdm(0xff01,6,0,1,2,0x82); CHECK(pd.partner_status&0x100u);
+ mock.mux_pending=0; pd_poll(); CHECK(pd.dp==DP_ACTIVE);
+ CHECK(pd.hpd_pending); mock_advance(3); CHECK(!mock.hpd_output);
+ mock_advance(1); CHECK(mock.hpd_output); CHECK(mock.hpd_irqs==1);
+}
+static void test_mux_fault(void) {
+ to_config(1,0,0x82); mock.mux_pending=1;
+ vdm(0xff01,17,1,1,1,0); CHECK(pd.dp==DP_MUX_WAIT);
+ mock.mux_fault=1; pd_poll(); CHECK(pd.dp==DP_FAILED);
+ CHECK(pd.error==ERR_HARDWARE); safe();
+}
+static void test_mux_timeout(void) {
+ to_config(1,0,0x82); mock.mux_pending=1;
+ vdm(0xff01,17,1,1,1,0); CHECK(pd.dp==DP_MUX_WAIT);
+ mock_advance(99); CHECK(pd.dp==DP_MUX_WAIT); CHECK(!mock.hpd_output);
+ mock_advance(1); CHECK(pd.dp==DP_FAILED); CHECK(pd.error==ERR_HARDWARE); safe();
+}
+static void test_mux_cancel(void) {
+ to_config(1,0,0x82); mock.mux_pending=1;
+ vdm(0xff01,17,1,1,1,0); CHECK(pd.dp==DP_MUX_WAIT);
+ mock.orientation=0; pd_poll(); CHECK(!pd.entered); safe();
+ mock.mux_pending=0; mock_advance(30); CHECK(pd.dp==DP_IDLE); safe();
+}
 static void run(const char *name,void (*test)(void)) {
  test_name=name; tests_run++;
  if(!setjmp(abort_test)) { test(); printf("PASS %s\n",name); }
@@ -582,6 +611,7 @@ int main(void) {
  RUN(ufp_status_disconnected); RUN(pending_irq_preserved); RUN(pending_irq_cleared_by_low);
  RUN(phy_tx_end_missing); RUN(status_busy_preserves_irq);
  RUN(enter_timeout_boundary); RUN(exit_timeout_boundary);
+ RUN(mux_delayed); RUN(mux_fault); RUN(mux_timeout); RUN(mux_cancel);
  printf("%u tests, %u failures, %u assertions (PC Mock HAL; no hardware validation)\n",tests_run,tests_failed,assertions);
  return tests_failed?1:0;
 }

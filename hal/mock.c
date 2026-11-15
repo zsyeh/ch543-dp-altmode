@@ -14,6 +14,13 @@ void mock_inject(const uint8_t *data, uint8_t len) {
 void mock_ack(uint8_t id) { phy_ack_id=id; mock.events|=PHY_ACK; pd_poll(); }
 void mock_event(uint8_t event) { mock.events|=event; pd_poll(); }
 void hal_init(void) { mock_reset(); }
+#ifndef MOCK_CH9445
+void hal_poll(void) { }
+uint8_t dp_mux_status(void) { return mock.mux_fault?MUX_FAULT:(mock.mux_pending?MUX_PENDING:MUX_READY); }
+#else
+#include "ch9445.h"
+void hal_poll(void) { ch9445_poll(); }
+#endif
 void pd_phy_enable(uint8_t orientation) {
  mock.phy_enabled=1; mock.phy_orientation=orientation;
 }
@@ -33,6 +40,7 @@ void pd_phy_rx_release(void) { mock.rx_owned=0; mock.rx_releases++; }
 uint8_t typec_get_orientation(void) { return mock.orientation; }
 uint8_t board_vbus_valid(void) { return mock.vbus_valid; }
 uint16_t system_get_tick(void) { return mock.tick; }
+#ifndef MOCK_CH9445
 void dp_mux_set(uint8_t pin,uint8_t orientation,uint8_t role) {
  mock.mux_pin=pin; mock.mux_orientation=orientation; mock.mux_role=role;
  mock.mux_order=++mock.hw_order;
@@ -42,6 +50,7 @@ void dp_aux_set(uint8_t enable,uint8_t orientation) {
  mock.aux_enabled=enable; mock.aux_orientation=orientation;
  if(enable) mock.aux_enable_order=++mock.hw_order;
 }
+#endif
 uint8_t dp_hpd_get(void) { return mock.hpd_input; }
 uint8_t dp_hpd_irq_get(void) { uint8_t irq=mock.hpd_irq_input; mock.hpd_irq_input=0; return irq; }
 void dp_hpd_set(uint8_t level,uint8_t irq) {

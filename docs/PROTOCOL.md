@@ -96,3 +96,9 @@ Soft Reset 用于协议层恢复，重置 Message ID 和重新建立电源合同
 Hard Reset 清除模式和合同、恢复默认数据角色并关断 MUX/AUX/HPD；参考 Sink 等待供电端重新恢复。恢复等待明确区分“尚未观察到 VBUS 低”和“已经观察到低、等待恢复”两阶段，在总计 1000 ms 内允许 VBUS 暂降及因此产生的方向读数为零，保留连接方向。新 Source_Capabilities 或低后恢复可结束保护；超时后恢复通常的拔线判断。模式已进入时收到 DR_SWAP 也触发 Hard Reset。完整电源转换、复位次数与所有 PD policy 状态仍需产品级扩展。
 
 Linux 的 [displayport.c](https://github.com/torvalds/linux/blob/master/drivers/usb/typec/altmodes/displayport.c) 用于交叉检查配置前安全态、待配置 HPD/IRQ 及 USB 配置/退出请求的区分；代码为本工程独立实现。取得与尚缺的规范证据见 [AUDIT.md](AUDIT.md)，不以参考实现代替规范认证。
+
+## 异步 MUX 提交（Board2）
+
+Configure 的 ACK 条件满足后进入 `DP_MUX_WAIT`，`dp_mux_set()` 只提交路由请求；主循环先处理新收到的拔线/Reset/Exit，再执行一次 `hal_poll()`。HAL READY 才转 `DP_ACTIVE`，并开始 Source HPD 的 4 ms 低电平防护。等待期间收到的 HPD IRQ 会保留，不因后续只有高电平的 Attention 丢失。HAL FAULT 或 100 ms 超时转 `DP_FAILED/ERR_HARDWARE`。Soft Reset 保留已协商且等待硬件完成的模式。
+
+`pd_safe()` 取消所有未完成的路由；协议上的安全状态不代表失效 I²C 总线下物理开关必然关闭，详见 [BOARD2](BOARD2.md)。参考 GPIO HAL 立即返回 READY，通用协议测试另有延迟/超时/故障注入。

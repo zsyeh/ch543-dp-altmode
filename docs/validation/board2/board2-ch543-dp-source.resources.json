@@ -1,0 +1,86 @@
+{
+  "image": "ch543-dp-source.ihx",
+  "sha256": "3a3cdb2845ed36a929f85ab7b5de5ca35d588327f006be3b74e72704db81bf2f",
+  "flash": 11014,
+  "flash_limit": 14336,
+  "iram_occupied": 191,
+  "iram_holes": 1,
+  "stack_start": 192,
+  "stack_capacity": 64,
+  "xram": 204,
+  "xram_limit": 256,
+  "modules": [
+    {
+      "module": "wire",
+      "code": 195,
+      "data": 0,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 4,
+      "bit_count": 0
+    },
+    {
+      "module": "pd",
+      "code": 3137,
+      "data": 24,
+      "idata": 67,
+      "xdata": 60,
+      "overlay": 8,
+      "bit_count": 0
+    },
+    {
+      "module": "dp",
+      "code": 3548,
+      "data": 45,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 4,
+      "bit_count": 2
+    },
+    {
+      "module": "ch543_phy",
+      "code": 2246,
+      "data": 12,
+      "idata": 0,
+      "xdata": 130,
+      "overlay": 0,
+      "bit_count": 0
+    },
+    {
+      "module": "ch543_board2",
+      "code": 606,
+      "data": 3,
+      "idata": 2,
+      "xdata": 6,
+      "overlay": 1,
+      "bit_count": 0
+    },
+    {
+      "module": "ch9445",
+      "code": 570,
+      "data": 2,
+      "idata": 0,
+      "xdata": 8,
+      "overlay": 2,
+      "bit_count": 0
+    },
+    {
+      "module": "soft_i2c",
+      "code": 431,
+      "data": 2,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 1,
+      "bit_count": 3
+    },
+    {
+      "module": "main-source",
+      "code": 189,
+      "data": 0,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 0,
+      "bit_count": 0
+    }
+  ]
+}

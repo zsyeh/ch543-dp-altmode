@@ -1,5 +1,7 @@
 # CH543D 板级连接与逐步上板
 
+> 2026-11-15 Board2 更新：实际 MUX 为 CH9445F。实际引脚、仅 D 的 lane 能力、VBUS 禁用条件及 I²C 故障边界见 [BOARD2](BOARD2.md)。本文中的原 GPIO 参考板接线不适用于该板。
+
 参考 HAL 面向 **CH543D，电源角色固定 Sink**。选择 DP Source 或 DP Sink 只改变视频方向；芯片不处理视频高速数据。需要外部 DP 发射器/接收器、高速 MUX、AUX/SBU 通路和 HPD 电路。参考引脚来自 CH543D 引脚表及官方 SDK 的 SFR 定义，来源见 [AUDIT.md](AUDIT.md)。这是一份移植连接约定，不是已经制作或验证的原理图。
 
 ## 参考控制接口

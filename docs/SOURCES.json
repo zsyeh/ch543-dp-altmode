@@ -37,6 +37,23 @@
       "url": "https://raw.githubusercontent.com/torvalds/linux/23c62304dde29abe92013d85910d03a77dada35d/drivers/usb/typec/altmodes/displayport.c",
       "bytes": 21525,
       "sha256": "ff445721794092b33a9042e5ac40f356b41f9e8c9dd3b91ea08174ee89dfbfe7"
+    },
+    {
+      "file": "CH9445DS1.pdf",
+      "url": "https://file.wch.cn/download/file?id=392",
+      "bytes": 411132,
+      "sha256": "c8d4e5e2389822a250d49bdca5a16dabff2b9a0600ec86af7feefae5f7f42d39"
+    },
+    {
+      "file": "slla365.pdf",
+      "url": "https://www.ti.com/lit/an/slla365/slla365.pdf",
+      "bytes": 364379,
+      "sha256": "d63e932e35209c21aeeb58ec1d4fffd1c32d2807b1106eabb1b463edf2a46f12"
     }
-  ]
+  ],
+  "board2_source": {
+    "filename": "ProDoc_Board2_2026-11-15.epro2",
+    "sha256": "a08d17972b127bb7f14f6917210a8e3a69d90c5b061ff7bd5d5de708ade6064d",
+    "note": "User-provided local design; original archive is not distributed."
+  }
 }

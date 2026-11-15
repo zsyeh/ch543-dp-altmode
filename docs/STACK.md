@@ -1,4 +1,21 @@
-# SDCC 栈空间静态检查
+# 当前 Board2 及参考板栈估计
+
+新增 CH9445 后，实际 SDCC 4.5.0 生成汇编由 `tools/estimate_stack.py` 遍历控制流：条件分支均检查，LCALL/ACALL计2 B返回地址，LJMP尾调用不额外加返回地址；递归、未解析调用、间接跳转、直接修改SP或分支栈深不一致均报错。当前Board2共77个函数、参考板69个函数。不是形式化证明，未包括C运行库初始化；下方旧的28 B只适用于初版。
+
+| 当前构建 | 前台峰值 | 低优先级ISR含PC | PD ISR含PC | 估计合计 | 栈容量 / 估计余量 |
+|---|---:|---:|---:|---:|---:|
+| Board2 两种视频角色 | 16 B | 4 B | 12 B | 32 B | 64 B / 32 B |
+| GPIO参考板两种角色 | 14 B | 4 B | 12 B | 30 B | 66 B / 36 B |
+
+Board2 最深路径位于 `main → pd_poll → hal_poll → ch9445_poll → board_i2c_read → put_byte → clock_high → pause_bus`。生成器会对部分边使用尾调用；显式寄存器保存与返回地址共同形成16 B。IRQ仍为PD高优先级bank1、其他低优先级bank2，同级不嵌套；CAP1时间戳放入idata不会占用前台overlay。Source/Sink共用对象，只在main中改变角色常量。
+
+```sh
+python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-dp-source.ihx
+```
+
+脚本当前与链接检查一起执行，要求静态估计余量至少16 B；实际最高水位、ISR延迟和异常流量下行为仍需上板观测。当前原始结果见 [Board2](validation/board2/board2-ch543-dp-source.stack.json) 和 [参考板](validation/board2/reference-ch543-dp-source.stack.json)。换工具链后重新生成，不能继承此数字。
+
+# 初版 v0.1.0 栈估计（历史快照）
 
 2026-11-15，检查实际目标构建生成的 `build/target/*.asm` 与 `build/ch543-dp-source.mem`，编译器为 SDCC 4.5.0 #15242，参数为 `-mmcs51 --model-small --std-sdcc11 --opt-code-size`。Source/Sink 镜像共用协议与 HAL 对象，只改变 `main` 的默认视频角色。
 

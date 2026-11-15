@@ -1,0 +1,11 @@
+{
+  "functions": 77,
+  "foreground": 16,
+  "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+  "low_isr_with_return": 4,
+  "pd_isr_with_return": 12,
+  "combined_estimate": 32,
+  "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+  "capacity": 64,
+  "estimated_headroom": 32
+}

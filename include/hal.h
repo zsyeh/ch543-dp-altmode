@@ -8,11 +8,17 @@
 #define PHY_ACK 8u
 #define PHY_FAULT 16u
 #define MUX_SAFE 0u
-/* All functions are nonblocking. Target ISR handles only PHY/CRC/GoodCRC. */
+/* Setters queue changes; hal_poll performs at most one bounded I2C transfer.
+ * Interrupts remain enabled during I2C. No wait for an external event. */
 extern uint8_t XDATA pd_rx[PD_MAX_FRAME];
 extern uint8_t XDATA pd_tx[PD_MAX_FRAME];
 extern volatile uint8_t phy_rx_len, phy_ack_id;
 void hal_init(void);
+void hal_poll(void);
+#define MUX_PENDING 0u
+#define MUX_READY 1u
+#define MUX_FAULT 2u
+uint8_t dp_mux_status(void);
 void pd_phy_enable(uint8_t orientation);
 void pd_phy_disable(void);
 uint8_t pd_phy_send(uint8_t len);

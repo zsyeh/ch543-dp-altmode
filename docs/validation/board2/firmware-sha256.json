@@ -1,0 +1,22 @@
+[
+  {
+    "file": "build/board2/ch543-dp-sink.hex",
+    "bytes": 30320,
+    "sha256": "ca02013051679bfc1c58309e1d11a669b672e0c6ae21edd540dbae4b84ddc297"
+  },
+  {
+    "file": "build/board2/ch543-dp-source.hex",
+    "bytes": 30320,
+    "sha256": "176130342285f6875e47eb934f49b6ccdf03d59df2158d9b4878375b27a17424"
+  },
+  {
+    "file": "build/ch543-dp-sink.hex",
+    "bytes": 27628,
+    "sha256": "2066a6190effd954511b2d377b5c0d77202cea5e150df97597ee972b3f28e6a0"
+  },
+  {
+    "file": "build/ch543-dp-source.hex",
+    "bytes": 27628,
+    "sha256": "66804bd3773503e607802c8c478efc2c38853a0317c038358618051f448a14f2"
+  }
+]

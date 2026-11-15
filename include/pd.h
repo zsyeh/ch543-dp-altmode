@@ -21,6 +21,7 @@
 #define DP_ACTIVE 7u
 #define DP_EXITING 8u
 #define DP_FAILED 9u
+#define DP_MUX_WAIT 10u
 #define ERR_NONE 0u
 #define ERR_LINK 1u
 #define ERR_TIMEOUT 2u
@@ -30,6 +31,7 @@
 #define ERR_NO_SVID 6u
 #define ERR_BUSY 7u
 #define ERR_POWER 8u
+#define ERR_HARDWARE 9u
 typedef struct {
  uint16_t link_deadline, pe_deadline, vdm_deadline, cc_since;
  uint32_t partner_mode;

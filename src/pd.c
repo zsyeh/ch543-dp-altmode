@@ -7,7 +7,7 @@ uint8_t pd_due(uint16_t deadline) { return (uint16_t)(now-deadline)<0x8000u; }
 void pd_safe(void) {
  dp_hpd_set(0,0); pd.hpd_pending=0; dp_aux_set(0,pd.orientation);
  dp_mux_set(MUX_SAFE,pd.orientation,pd.video_role); pd.pin=0;
- if(pd.dp==DP_ACTIVE) pd.dp=DP_IDLE;
+ if(pd.dp==DP_ACTIVE || pd.dp==DP_MUX_WAIT) pd.dp=DP_IDLE;
 }
 void dp_reset(void) {
  pd_safe(); pd.entered=0; pd.mode_obj=0; pd.pending_cmd=0;
@@ -171,7 +171,7 @@ void pd_init(uint8_t video_role, uint8_t power_role, uint8_t prefer_usb3) {
 }
 uint8_t pd_set_video_role(uint8_t role) {
  if(pd.orientation || (role!=DP_SOURCE && role!=DP_SINK)) return 0;
- pd.video_role=role; return 1;
+ pd.video_role=role; pd_safe(); return 1;
 }
 void pd_request_exit(void) {
  if(pd.entered) {
@@ -183,7 +183,7 @@ uint8_t pd_request_data_swap(void) {
  if(!pd.contract || pd.entered || pd.pending_cmd || pd.tx_busy || pd.job) return 0;
  pd_queue_control(PD_DR_SWAP,AFTER_DR_REQUEST); pd.dr_swap=1; return 1;
 }
-void pd_poll(void) {
+static void pd_step(void) {
  uint8_t o,e;
  now=system_get_tick(); o=typec_get_orientation();
  e=pd.orientation?pd_phy_events():0;
@@ -247,4 +247,8 @@ void pd_poll(void) {
  }
  if(pd.contract && pd.pe==PE_READY && !pd.dr_swap) dp_poll();
  submit_job();
+}
+void pd_poll(void) {
+ pd_step(); /* detach/reset cancels obsolete routing before any I2C commit */
+ hal_poll();
 }
