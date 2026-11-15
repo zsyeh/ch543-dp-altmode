@@ -585,6 +585,47 @@ static void test_mux_cancel(void) {
  mock.orientation=0; pd_poll(); CHECK(!pd.entered); safe();
  mock.mux_pending=0; mock_advance(30); CHECK(pd.dp==DP_IDLE); safe();
 }
+static void sink_waiting_mux(void) {
+ ufp_enter(2); mock.hpd_input=1;
+ vdm(0xff01,16,0,1,2,1); vdm_tx(0xff01,16,1,1,2);
+ /* Monitor is already attached, but neither AUX nor lanes are usable yet. */
+ CHECK(u32(last()->bytes+6)==2u); ack(); CHECK(!pd.tx_busy);
+ mock.mux_pending=1;
+ vdm(0xff01,17,0,1,2,0x806u); vdm_tx(0xff01,17,1,1,1);
+ CHECK(mock.mux_commits==0); ack(); CHECK(pd.dp==DP_MUX_WAIT);
+ CHECK(!pd.tx_busy); CHECK(dp_local_status()==2u);
+}
+static void test_sink_hpd_waits_for_mux(void) {
+ sink_waiting_mux(); mock.hpd_irq_input=1; pd_poll();
+ CHECK(!pd.tx_busy); CHECK(!pd.irq); CHECK(dp_local_status()==2u);
+ mock.mux_pending=0; pd_poll(); CHECK(pd.dp==DP_ACTIVE);
+ vdm_tx(0xff01,6,0,1,2); CHECK(u32(last()->bytes+6)==0x8aUL); ack();
+ CHECK(!pd.tx_busy); CHECK(dp_local_status()==0x8au);
+ /* A real pulse after activation is still sent exactly once. */
+ mock.hpd_irq_input=1; pd_poll(); vdm_tx(0xff01,6,0,1,2);
+ CHECK(u32(last()->bytes+6)==0x18aUL); ack(); CHECK(!pd.tx_busy);
+}
+static void test_sink_hpd_mux_failure(void) {
+ sink_waiting_mux(); mock.mux_fault=1; pd_poll();
+ CHECK(pd.dp==DP_FAILED); CHECK(pd.error==ERR_HARDWARE);
+ CHECK(dp_local_status()==2u); pd_poll(); CHECK(!pd.tx_busy); safe();
+}
+static void test_sink_hpd_mux_timeout(void) {
+ sink_waiting_mux(); mock_advance(100);
+ CHECK(pd.dp==DP_FAILED); CHECK(pd.error==ERR_HARDWARE);
+ CHECK(dp_local_status()==2u); CHECK(!pd.tx_busy); safe();
+}
+static void test_dfp_sink_hpd_waits_for_mux(void) {
+ to_enter(2,0,0x00001c46UL); mock.hpd_input=1;
+ vdm(0xff01,4,1,1,1,0); vdm_tx(0xff01,16,0,1,2);
+ CHECK(u32(last()->bytes+6)==2u); ack();
+ vdm(0xff01,16,1,1,2,1); vdm_tx(0xff01,17,0,1,2); ack();
+ mock.mux_pending=1; vdm(0xff01,17,1,1,1,0);
+ CHECK(pd.dp==DP_MUX_WAIT); CHECK(!pd.tx_busy); CHECK(dp_local_status()==2u);
+ mock.mux_pending=0; pd_poll(); CHECK(pd.dp==DP_ACTIVE);
+ vdm_tx(0xff01,16,0,1,2); CHECK(u32(last()->bytes+6)==0x82UL); ack();
+ vdm(0xff01,16,1,1,2,9); CHECK(!pd.tx_busy);
+}
 static void run(const char *name,void (*test)(void)) {
  test_name=name; tests_run++;
  if(!setjmp(abort_test)) { test(); printf("PASS %s\n",name); }
@@ -612,6 +653,8 @@ int main(void) {
  RUN(phy_tx_end_missing); RUN(status_busy_preserves_irq);
  RUN(enter_timeout_boundary); RUN(exit_timeout_boundary);
  RUN(mux_delayed); RUN(mux_fault); RUN(mux_timeout); RUN(mux_cancel);
+ RUN(sink_hpd_waits_for_mux); RUN(sink_hpd_mux_failure); RUN(sink_hpd_mux_timeout);
+ RUN(dfp_sink_hpd_waits_for_mux);
  printf("%u tests, %u failures, %u assertions (PC Mock HAL; no hardware validation)\n",tests_run,tests_failed,assertions);
  return tests_failed?1:0;
 }

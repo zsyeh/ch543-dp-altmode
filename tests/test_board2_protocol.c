@@ -39,6 +39,7 @@ static void enter(uint8_t video,uint8_t dfp,uint8_t orientation) {
  uint32_t mode=video==1?0x00000846UL:0x00080045UL;
  mock_reset(); ch9445_init(); memset(r,0,sizeof r); buffer=peer=0; changes=0;
  pd_init(video,0,1); mock.orientation=orientation; mock.vbus_valid=1;
+ mock.hpd_input=(video==2); /* monitor attached before PD/VDM negotiation */
  pd_poll(); mock_advance(120); assert(pd.orientation==orientation);
  send(1,1,0x04019032UL,0); ack(); send(3,0,0,0); send(6,0,0,0);
  assert(pd.contract && !pd.power_role && !pd.data_role && r[0x10]==1);
@@ -50,7 +51,9 @@ static void enter(uint8_t video,uint8_t dfp,uint8_t orientation) {
   expect(0xff01,3,0,0,1); ack();
   vdm(0xff01,3,1,0,2,video==1?0x001c0045UL:0x00001c46UL);
   expect(0xff01,4,0,1,1); ack(); vdm(0xff01,4,1,1,1,0);
-  expect(0xff01,16,0,1,2); ack(); vdm(0xff01,16,1,1,2,video==1?0x92:1);
+  expect(0xff01,16,0,1,2);
+  if(video==2) assert(get32(mock.frames[mock.sends-1].bytes+6)==2);
+  ack(); vdm(0xff01,16,1,1,2,video==1?0x92:1);
   expect(0xff01,17,0,1,2);
   assert(get32(mock.frames[mock.sends-1].bytes+6)==(video==1?0x806u:0x805u));
   ack(); assert(!changes && r[0x10]==1); vdm(0xff01,17,1,1,1,0);
@@ -60,7 +63,9 @@ static void enter(uint8_t video,uint8_t dfp,uint8_t orientation) {
   vdm(0xff01,3,0,0,1,0); expect(0xff01,3,1,0,2);
   assert(get32(mock.frames[mock.sends-1].bytes+6)==mode); ack();
   vdm(0xff01,4,0,1,1,0); expect(0xff01,4,1,1,1); ack();
-  vdm(0xff01,16,0,1,2,video==1?0x82:1); expect(0xff01,16,1,1,2); ack();
+  vdm(0xff01,16,0,1,2,video==1?0x82:1); expect(0xff01,16,1,1,2);
+  if(video==2) assert(get32(mock.frames[mock.sends-1].bytes+6)==0x12);
+  ack();
   /* C and E are rejected even though the portable protocol supports them. */
   vdm(0xff01,17,0,1,2,0x404u|video); expect(0xff01,17,2,1,1); ack();
   vdm(0xff01,17,0,1,2,0x1004u|video); expect(0xff01,17,2,1,1); ack();
@@ -73,9 +78,17 @@ int main(void) {
  unsigned video,dfp,o,i;
  for(video=1;video<=2;video++) for(dfp=0;dfp<=1;dfp++) for(o=1;o<=2;o++) {
   enter(video,dfp,o);
-  for(i=0;i<16;i++) { assert(!mock.hpd_output); pd_poll(); }
+  for(i=0;i<16;i++) {
+   assert(!mock.hpd_output);
+   if(video==2) { assert(!(dp_local_status()&0x180)); assert(!pd.tx_busy); }
+   pd_poll();
+  }
   assert(pd.dp==DP_MUX_WAIT); pd_poll(); assert(pd.dp==DP_ACTIVE);
   assert(!r[0x10] && r[0x30]); assert(!mock.vbus_on_calls);
+  if(video==2) {
+   expect(0xff01,dfp?16:6,0,1,2);
+   assert(get32(mock.frames[mock.sends-1].bytes+6)==(dfp?0x82:0x9a));
+  }
   if(video==1) { mock_advance(3); assert(!mock.hpd_output); mock_advance(1); assert(mock.hpd_output); }
   if(pd.tx_busy) ack();
   mock.orientation=0; pd_poll(); assert(r[0x10]==1 && !mock.hpd_output);

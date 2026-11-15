@@ -78,6 +78,8 @@ PC 的时间推进为确定性的毫秒事件；不模拟 USB PD 总线冲突和
 - `test_i2c.c` 执行真实软件 I²C：观察逐位输出，验证 0x90/0x91、寄存器/数据、重复 START、读末字节 NACK、各阶段 NACK、STOP 失败、总线卡住时有界返回。
 - `test_board2_hal.c` 执行实际 HAL 的 SFR 功能模型：GPIO/PWREN#、默认 VBUS 防护、140,000 次计时回卷、CAP1 的 HPD IRQ 宽度边界、输出 IRQ 与角色方向。
 - `test_board2_protocol.c` 把实际协议和 CH9445 驱动连接：USB DFP/UFP × 视频 Source/Sink × CC1/CC2 共八条协商路径；检查报文字段、D-only 能力、C/E NAK、ACK/GoodCRC 前不切换、读回前不拉高 HPD及17个拔线位置。
+- Sink 排查新增 `sink_hpd_waits_for_mux`、`sink_hpd_mux_failure`、`sink_hpd_mux_timeout`、`dfp_sink_hpd_waits_for_mux`：显示器先插好时，完整帧中的 HPD/IRQ 在配置/读回前为零，READY 后分别由正确数据角色通知，失败不报高，激活后的 IRQ 保留。当前总计 **76 项 / 27,812 个断言**；真实 CH9445 八路径模型同步覆盖早到的物理 HPD。
+- `test_board2_diag.c` 执行独立诊断实际代码：UART 的分频/引脚/非阻塞发送、完整日志、只写 MUX_PDR=1、七个 I²C 事务失败位置、异常读回不报假成功、旧值失效、70 秒 UART 不就绪下时钟回卷和后续周期恢复。该镜像不链接 PD，不可把它的计时器初始化用于协议固件。
 - `tools/check_board2_routes.py` 独立从 EPRO 提取的焊盘连接推导路由，不直接使用驱动的路由常量生成期望结果。
 
 以上均为功能模型，外设时序、实际模拟开关导通和真实视频链路未验证。所有新增 C 测试均进入 `make test` 与 `make sanitize`。

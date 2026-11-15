@@ -1,0 +1,7 @@
+{
+  "build/reference/ch543-reference-dp-source.hex": "37d243efb31e145446612dd7dfa550f46bf3c26d2627a03b24f9a047aa39309a",
+  "build/reference/ch543-reference-dp-sink.hex": "2fd37e7db1b88b4d5e33ad8b6c47204260b29897f6ac65e2b157cd9f270dd580",
+  "build/diagnostic/ch543-board2-diagnostic-uart115200.hex": "4aa8747244ad3e57f49a0ab73c264a6e321ba02bc670e63534c8ac67cfcf5c90",
+  "build/board2/ch543-board2-dp-sink-guarded.hex": "523a0579fde3603934adc08f9b0e6bf4133c3736b1f8beef7d1c2f666614078f",
+  "build/board2/ch543-board2-dp-source-guarded.hex": "67bf4014d229d611a4d4b1427b65f3067429c08bcefad7e2f5da19d566111d3b"
+}

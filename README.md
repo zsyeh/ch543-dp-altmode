@@ -4,14 +4,16 @@
 
 **当前是可构建、可在 PC 回归测试的硬件实验版本；尚未在 CH543D 实物、PD 分析仪或真实显示器上验证。** 默认两个镜像都使用 PD Sink 供电，绝不因选择 DP Source 而开启 VBUS。新增基于实际 EPRO 网表的 **Board2 / CH9445F** 适配；默认因原图 VBUS 检测问题禁用 PD attach，详见 [BOARD2](docs/BOARD2.md)。
 
-本地测试包括 72 项通用协议测试 / 27,205 个断言、7 组 PHY 模型，以及真实 CH9445 驱动、I²C 位序、Board2 HPD、八种角色/方向组合的完整协商和故障注入。Board2 的 SDCC 镜像各占 Flash 11,014 B、iRAM 静态分配 191 B、xRAM 204 B，栈区域 64 B；生成汇编估计峰值 32 B。完整结果见 [RESOURCES](docs/RESOURCES.md)。[GitHub CI](https://github.com/zsyeh/ch543-dp-altmode/actions/runs/43658656642) 已独立通过；[Board2 实验版下载](https://github.com/zsyeh/ch543-dp-altmode/releases/tag/v0.2.0-board2-experimental)。
+本地测试包括 76 项通用协议测试 / 27,812 个断言、7 组 PHY 模型，以及真实 CH9445 驱动、I²C 位序、Board2 HPD、八种角色/方向组合的完整协商和故障注入。Board2 的 SDCC 镜像各占 Flash 11,038 B、iRAM 静态分配 191 B、xRAM 204 B，栈区域 64 B；生成汇编估计峰值 32 B。完整结果见 [RESOURCES](docs/RESOURCES.md)。本次本地完整构建记录见 [validation/diagnostic](docs/validation/diagnostic/)，[实验版下载](https://github.com/zsyeh/ch543-dp-altmode/releases/tag/v0.3.0-board2-diagnostic)。
+
+**首次上板先使用 [独立诊断镜像](docs/DIAGNOSTIC.md)：`ch543-board2-diagnostic-uart115200.hex`。** 它每秒通过板载 CH340 输出 UART/I²C 原始状态，不运行 PD 或视频。普通协议固件没有串口日志。2026-11-15 截图中的 `build/ch543-dp-sink.hex` 是 GPIO 参考板产物，不能用于本板；新构建默认只生成 Board2 和诊断固件，文件名明确包含板型与 VBUS guard 状态。截图排查记录见 [DIAGNOSTIC](docs/DIAGNOSTIC.md)。
 
 ## 已有功能
 
 - 事件驱动 PD2.0 / SVDM1.0 / SOP 协议子集，固定 5 V 合同；消息 ID、重复过滤、GoodCRC、重试、Soft Reset 与 Hard Reset 恢复。
 - FF01 Discover Identity / SVIDs / Modes、Enter、Status、Configure、Attention、Exit；ACK / NAK / BUSY / 超时与安全恢复。
 - USB DFP/UFP × DP Source/Sink 四种组合；通用核心支持 C/E 四 lane 与 D 两 lane + USB3 引脚选择，实际 Board2 只声明 D；有效协商完成才使能 MUX/AUX。
-- HPD 电平与 IRQ，配置后 HPD 保持低至少 3 ms 的软件防护；真实脉宽和响应延迟仍待实测。
+- HPD 电平与 IRQ；Source 配置后 HPD 保持低至少 3 ms，Sink 等 CH9445/AUX 读回确认后才在线上通知 HPD 高，修正先插显示器时的提前通知。真实脉宽和响应延迟仍待实测。
 - 实际 CH543 PHY 的 DMA、CRC、GoodCRC 和中断驱动，以及 PC Mock HAL、真实驱动寄存器功能模型。
 
 功能边界见 [STATUS](docs/STATUS.md)，芯片与规范证据见 [AUDIT](docs/AUDIT.md)。不支持有源线缆协商、SOP′/SOP″策略、DPAM2.x/UHBR、PPS、PR_SWAP、VCONN_SWAP、Billboard 或完整 PD 产品认证。
@@ -27,11 +29,14 @@ make sanitize
 make firmware
 ```
 
-本次实际使用 SDCC 4.5.0，`--model-small --opt-code-size`。`make firmware` 同时生成：
+本次实际使用 SDCC 4.5.0，`--model-small --opt-code-size`。从旧版本更新后先执行 `make clean` 清除旧同名产物。`make firmware` 生成：
 
-- `build/board2/ch543-dp-source.hex` / `ch543-dp-sink.hex`：CH9445 Board2，默认受限实验镜像，先阅读 [供电约束](docs/BOARD2.md)。
-- `build/ch543-dp-source.hex` / `ch543-dp-sink.hex`：原 GPIO 参考板，**不能用于 CH9445 Board2**。
+- `build/diagnostic/ch543-board2-diagnostic-uart115200.hex`：独立诊断，115200/8N1，无 PD 协商。
+- `build/board2/ch543-board2-dp-source-guarded.hex` / `ch543-board2-dp-sink-guarded.hex`：CH9445 Board2，默认禁止 PD attach，先阅读 [供电约束](docs/BOARD2.md)。
+- `build/board2/images-guarded.json`：本次两张协议镜像的 SHA256、角色、资源与 guard 状态。
 - 同名 `.ihx/.map/.mem/.resources.json/.resources.md`：目标镜像、链接分配和模块统计。
+
+只有显式 `make reference` 才生成 `build/reference/ch543-reference-dp-source.hex` / `ch543-reference-dp-sink.hex`；这些 GPIO 参考板镜像不能烧进 CH9445 Board2。`make diagnostic` 可单独构建诊断镜像。旧文件若仍存在，构建会打印提示，不会覆盖旧路径冒充适配完成。
 
 每次成功链接会检查复位、启动 hook 和实际使用的 ISR 向量（参考板 5 个，Board2 4 个），打印 Flash / iRAM / xRAM / 栈分配及生成汇编的栈估计。Flash 链接上限为 14 KiB，保留 CH543 通常的 ISP/数据区。编译器版本变化后请重新检查内存和生成的汇编。
 

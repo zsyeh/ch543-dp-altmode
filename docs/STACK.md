@@ -6,11 +6,13 @@
 |---|---:|---:|---:|---:|---:|
 | Board2 两种视频角色 | 16 B | 4 B | 12 B | 32 B | 64 B / 32 B |
 | GPIO参考板两种角色 | 14 B | 4 B | 12 B | 30 B | 66 B / 36 B |
+| 独立 Board2 诊断 | 16 B | 0 | 0 | 16 B | 223 B / 207 B |
 
 Board2 最深路径位于 `main → pd_poll → hal_poll → ch9445_poll → board_i2c_read → put_byte → clock_high → pause_bus`。生成器会对部分边使用尾调用；显式寄存器保存与返回地址共同形成16 B。IRQ仍为PD高优先级bank1、其他低优先级bank2，同级不嵌套；CAP1时间戳放入idata不会占用前台overlay。Source/Sink共用对象，只在main中改变角色常量。
 
 ```sh
-python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-dp-source.ihx
+python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-board2-dp-source-guarded.ihx
+python3 tools/estimate_stack.py build/diagnostic/target --image build/diagnostic/ch543-board2-diagnostic-uart115200.ihx --no-interrupts
 ```
 
 脚本当前与链接检查一起执行，要求静态估计余量至少16 B；实际最高水位、ISR延迟和异常流量下行为仍需上板观测。当前原始结果见 [Board2](validation/board2/board2-ch543-dp-source.stack.json) 和 [参考板](validation/board2/reference-ch543-dp-source.stack.json)。换工具链后重新生成，不能继承此数字。

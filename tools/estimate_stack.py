@@ -15,6 +15,7 @@ import re
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('objects', type=Path)
 p.add_argument('--image', type=Path)
+p.add_argument('--no-interrupts', action='store_true', help='Standalone diagnostic only; IE/IE_EX remain zero')
 args = p.parse_args()
 functions = {}
 for path in sorted(args.objects.glob('*.asm')):
@@ -99,8 +100,12 @@ def peak(name):
 for function in functions:
     peak(function)
 foreground, chain = peak('_main')
-low = max(peak(n)[0] + 2 for n in functions if n.endswith('_isr') and n != '_pd_isr')
-high = peak('_pd_isr')[0] + 2
+if args.no_interrupts:
+    assert not any(n.endswith('_isr') for n in functions), 'unexpected ISR in diagnostic'
+    low = high = 0
+else:
+    low = max(peak(n)[0] + 2 for n in functions if n.endswith('_isr') and n != '_pd_isr')
+    high = peak('_pd_isr')[0] + 2
 result = {'functions': len(functions), 'foreground': foreground,
                   'foreground_path': chain, 'low_isr_with_return': low,
                   'pd_isr_with_return': high, 'combined_estimate': foreground + low + high,

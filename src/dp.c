@@ -11,7 +11,10 @@ uint16_t dp_local_status(void) {
   if(pd.prefer_usb3) v|=ST_MULTI;
   if(pd.exit_request) v|=ST_EXIT;
  }
- if(pd.video_role==DP_SINK) {
+ /* A pre-attached monitor must not trigger AUX access between Configure ACK
+  * and the asynchronous MUX readback. Publish its HPD only once lanes/AUX
+  * are READY; activated() then queues a fresh Attention/Status notification. */
+ if(pd.video_role==DP_SINK && pd.dp==DP_ACTIVE) {
   if(dp_hpd_get()) { v|=ST_HPD; if(pd.irq) v|=ST_IRQ; }
  }
  return v;
@@ -253,9 +256,10 @@ void dp_poll(void) {
   pd.partner_status&=(uint16_t)~ST_IRQ;
  }
  if(pd.video_role==DP_SINK && pd.entered) {
-  h=dp_hpd_get();
+  h=pd.dp==DP_ACTIVE?dp_hpd_get():0;
   if(h!=pd.hpd) { pd.hpd=h; pd.attention=1; }
   if(dp_hpd_irq_get() && h) { pd.irq=1; pd.attention=1; }
+  if(!h) pd.irq=0; /* discard pre-route/low-level IRQs, never send IRQ with HPD=0 */
  }
  if(pd.vdm_wait==1 && pd_due(pd.vdm_deadline)) { fail(ERR_TIMEOUT); return; }
  if(pd.tx_busy || pd.job) return;

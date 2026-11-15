@@ -42,6 +42,8 @@ CH9445 的矩阵并非任意 4×4 crossbar：LNA/LND 只可选两组 CRX，LNB/L
 
 成功的 Configure ACK（UFP 还需该 ACK 的 GoodCRC）之后，状态进入 `DP_MUX_WAIT`。每次 `hal_poll()` 最多一个 I²C 寄存器事务，事务内只有有界位操作，PD 中断持续开放。
 
+视频 Sink 在此之前和待配置期间将线上 HPD/IRQ 保持 0，即使 native DP 显示器已经拉高物理 HPD。完整读回后才发布 Attention（USB UFP）或 Status Update（USB DFP）中的 HPD 高，避免电脑在 ACK 后、AUX 尚未接通时过早访问。修复依据与回归见 [Sink 排查](DIAGNOSTIC.md)。
+
 1. 写 0x10=1 关闭全部开关，0x11=0 退出预设模式。
 2. 写 0x30=0，0x31=0，0x32=0 清除旧 AUX/通道；读回 0x11、0x30、0x31、0x32 确认全部为 0 后，才写 0x10=0 恢复可控状态，避免假定低功耗状态下的写操作一定生效。
 3. 写目标 0x31、0x32；后者将两个寄存器同时提交。随后写目标 0x30 接通 AUX。
@@ -71,13 +73,17 @@ R7 是 VBUS↔本地 +5 V 的 0Ω，原理图 `Add into BOM=no`。若实物焊�
 
 ```sh
 make test sanitize firmware
-# 默认 Board2 产物；先只核对 I2C、关闭状态、GPIO、计时，不会 PD attach
+# 首先烧独立诊断镜像，通过板载 CH340 读取 115200/8N1 日志
+ls build/diagnostic/*.hex
+# 默认 Board2 协议产物也不会 PD attach
 ls build/board2/*.hex
 
 # 只有修正并验证 5V-good 电路后，才使用此配置；不会开启 VBUS Source
 make board2 BOARD2_VBUS_VERIFIED=1
 ```
 
-构建会跟踪该参数变化并重编译，避免误用旧对象。恢复默认用 `make board2 BOARD2_VBUS_VERIFIED=0`。`build/*.hex` 是旧参考 GPIO 板布局，**不可用于本板**；Board2 文件位于 `build/board2/`。
+构建会跟踪该参数变化并重编译，避免误用旧对象。恢复默认用 `make board2 BOARD2_VBUS_VERIFIED=0`。默认协议文件名为 `ch543-board2-dp-{source,sink}-guarded.hex`；明确启用上述硬件配置后为 `ch543-board2-dp-{source,sink}-vbus-verified.hex`。后者文件名表示编译参数，不是软件已验证硬件。两个版本可同时留在目录，核对本次 `images-guarded.json` / `images-vbus-verified.json` 的哈希。
+
+旧 `build/ch543-dp-*.hex` 是 GPIO 参考板固件，**不可用于本板**。升级后执行 `make clean`；新版本默认不构建参考板，显式 `make reference` 才生成带 `reference` 的文件名。独立诊断、串口与逻辑分析仪接法见 [DIAGNOSTIC](DIAGNOSTIC.md)。
 
 先测本地供电/VDD12与 P3.5 电压，确认 R7 装配和 PWREN# 高电平；再读写 CH9445 地址 0x48 验证隔离/读回；之后用 PD 分析仪验证 GoodCRC/VDM；最后检查四种路由的 AUX 和两 lane link training。ISP 使用 P1.4/P1.6/P1.7，须避免 HPD 或外接 MCU 干扰下载。不要把 PC 功能模型成功作为此顺序中任何实物步骤的完成记录。

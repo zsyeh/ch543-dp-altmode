@@ -1,0 +1,41 @@
+{
+  "image": "ch543-board2-diagnostic-uart115200.ihx",
+  "sha256": "fd4e8ae38d33a5fe5ce42e84f017330f7c17c24bf241877eb356cdf634c42cf3",
+  "flash": 1305,
+  "flash_limit": 14336,
+  "iram_occupied": 18,
+  "iram_holes": 15,
+  "stack_start": 33,
+  "stack_capacity": 223,
+  "xram": 16,
+  "xram_limit": 256,
+  "modules": [
+    {
+      "module": "main",
+      "code": 97,
+      "data": 0,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 0,
+      "bit_count": 0
+    },
+    {
+      "module": "board2_diag",
+      "code": 685,
+      "data": 5,
+      "idata": 1,
+      "xdata": 16,
+      "overlay": 0,
+      "bit_count": 0
+    },
+    {
+      "module": "soft_i2c",
+      "code": 431,
+      "data": 2,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 1,
+      "bit_count": 3
+    }
+  ]
+}

@@ -78,7 +78,21 @@ for (role, flipped), registers in expected.items():
     assert route(role, 'D', flipped) == registers
     assert route(role, 'C', flipped) is None
     assert route(role, 'E', flipped) is None
+# Independently verify AUX end-to-end, including native DP pin polarity.
+# ST Tables 1-4: DFP_D CC1 A8=P/B8=N; UFP_D CC1 A8=N/B8=P;
+# flip interchanges A8/B8. TI Fig 9: native DP AUX P/N is pin 15/17.
+assert pair('PORT1', ('A8', 'B8')) == pair('U11', (10, 11))
+assert pair('USB2', (15, 17)) == pair('U11', (12, 13))
+for role in (1, 2):
+    for flipped in (False, True):
+        plus, minus = ('A8', 'B8') if role == 1 else ('B8', 'A8')
+        if flipped:
+            plus, minus = minus, plus
+        paths = {2: (10, 11), 1: (11, 10)}  # SYS_CTLR0: direct/cross
+        choices = [v for v, pins in paths.items()
+                   if pair('U11', pins) == pair('PORT1', (plus, minus))]
+        assert choices == [({1: (2, 1), 2: (1, 2)}[role][flipped])]
 assert pad('U10', 5) == pad('U11', 9)  # SDA
 assert pad('U10', 6) == pad('U11', 8)  # SCL
 assert parts['R7']['schematic_add_into_bom'] == 'no'
-print('EPRO netlist: all 4 D routes derived; C/E not routable; I2C pin mapping and R7 BOM flag checked')
+print('EPRO netlist: all 4 D lane + AUX routes derived; C/E not routable; I2C pin mapping and R7 BOM flag checked')

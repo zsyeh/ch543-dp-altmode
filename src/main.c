@@ -1,5 +1,9 @@
+#ifdef BOARD2_DIAGNOSTIC
+#include "board2_diag.h"
+#else
 #include "pd.h"
 #include "ch543_isr.h"
+#endif
 #include "ch543_regs.h"
 #if defined(__SDCC)
 /* Called by SDCC before C RAM initialization. The reset clock is 12 MHz and
@@ -27,7 +31,12 @@ unsigned char _sdcc_external_startup(void)
  * call pd_request_data_swap(). The reference main does not force a swap. */
 void main(void)
 {
+#ifdef BOARD2_DIAGNOSTIC
+    board2_diag_init();
+    for (;;) board2_diag_poll();
+#else
     hal_init();
     pd_init(DEFAULT_DP_ROLE, 0, PREFER_USB3);
     for (;;) pd_poll();
+#endif
 }

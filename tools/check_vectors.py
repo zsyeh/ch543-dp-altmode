@@ -64,11 +64,13 @@ def read_symbols(path):
     return symbols
 
 
-def verify(image, map_file, board2=False):
+def verify(image, map_file, board2=False, diagnostic=False):
     memory = read_hex(image)
     symbols = read_symbols(map_file)
     checked = []
     for address, name, symbol in VECTORS:
+        if diagnostic and name != "Reset":
+            continue  # Standalone diagnostic has every interrupt disabled.
         if board2 and name == "INT0":
             continue  # Board2 uses Timer2 CAP1 on P1.4 for HPD.
         if symbol not in symbols:
@@ -115,9 +117,10 @@ def main():
     parser.add_argument("image", type=Path)
     parser.add_argument("--map", dest="map_file", type=Path)
     parser.add_argument("--board2", action="store_true")
+    parser.add_argument("--diagnostic", action="store_true")
     args = parser.parse_args()
     try:
-        checks = verify(args.image, args.map_file or args.image.with_suffix(".map"), args.board2)
+        checks = verify(args.image, args.map_file or args.image.with_suffix(".map"), args.board2, args.diagnostic)
     except (ValueError, OSError) as exc:
         parser.exit(1, f"vector verification FAILED: {exc}\n")
     print(f"{args.image}: all {len(checks)} vectors + early startup verified: {', '.join(checks)}")

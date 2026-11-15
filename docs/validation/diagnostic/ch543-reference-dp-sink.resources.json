@@ -1,0 +1,68 @@
+{
+  "image": "ch543-reference-dp-sink.ihx",
+  "sha256": "7c06001f08d5d2d7f21424bd18325e1f999a23fdc578ab8b662c316eaaa164f6",
+  "flash": 10062,
+  "flash_limit": 14336,
+  "iram_occupied": 187,
+  "iram_holes": 3,
+  "stack_start": 190,
+  "stack_capacity": 66,
+  "xram": 190,
+  "xram_limit": 256,
+  "modules": [
+    {
+      "module": "wire",
+      "code": 195,
+      "data": 0,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 4,
+      "bit_count": 0
+    },
+    {
+      "module": "pd",
+      "code": 3137,
+      "data": 24,
+      "idata": 67,
+      "xdata": 60,
+      "overlay": 8,
+      "bit_count": 0
+    },
+    {
+      "module": "dp",
+      "code": 3573,
+      "data": 45,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 4,
+      "bit_count": 2
+    },
+    {
+      "module": "ch543_phy",
+      "code": 2246,
+      "data": 12,
+      "idata": 0,
+      "xdata": 130,
+      "overlay": 0,
+      "bit_count": 0
+    },
+    {
+      "module": "ch543_board",
+      "code": 630,
+      "data": 5,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 2,
+      "bit_count": 0
+    },
+    {
+      "module": "main-sink",
+      "code": 189,
+      "data": 0,
+      "idata": 0,
+      "xdata": 0,
+      "overlay": 0,
+      "bit_count": 0
+    }
+  ]
+}

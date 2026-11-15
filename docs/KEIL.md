@@ -1,5 +1,7 @@
 # Keil C51 构建与验证
 
+新增的独立 Board2 UART/I²C 诊断使用 `make diagnostic` / SDCC 构建，不在本脚本的四个目标中。用户当前 CH9445 板只能选择 `board2-*`，不能选择 `reference-*`；普通协议固件没有串口日志，见 [诊断说明](DIAGNOSTIC.md)。
+
 需要 Windows PowerShell、Python 3 和安装了 C51 工具集的 Keil 目录。该目录下应有 `C51\BIN\C51.exe`、`A51.exe`、`BL51.exe`、`OH51.exe`。完整链接需要正式 C51 授权。评估版可复现编译和 L250 链接结果。[Keil 下载](https://www.keil.com/demo/eval/c51.htm) · [评估版限制](https://www.keil.com/demo/limits.asp)
 
 在仓库根目录打开 PowerShell，将示例路径换成你的 C51 安装目录。

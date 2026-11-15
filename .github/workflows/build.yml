@@ -6,20 +6,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y sdcc
-      - run: make test sanitize firmware
+      - run: make test sanitize firmware reference
       - uses: actions/upload-artifact@v4
         with:
           name: ch543-experimental-firmware
           path: |
-            build/*.hex
-            build/*.ihx
-            build/*.map
-            build/*.mem
-            build/*.resources.*
-            build/*.stack.json
             build/board2/*.hex
             build/board2/*.ihx
             build/board2/*.map
             build/board2/*.mem
             build/board2/*.resources.*
             build/board2/*.stack.json
+            build/board2/images-*.json
+            build/diagnostic/*.hex
+            build/diagnostic/*.ihx
+            build/diagnostic/*.map
+            build/diagnostic/*.mem
+            build/diagnostic/*.resources.*
+            build/diagnostic/*.stack.json
+            build/reference/*.hex
+            build/reference/*.ihx
+            build/reference/*.map
+            build/reference/*.mem
+            build/reference/*.resources.*
+            build/reference/*.stack.json

@@ -102,3 +102,7 @@ Linux 的 [displayport.c](https://github.com/torvalds/linux/blob/master/drivers/
 Configure 的 ACK 条件满足后进入 `DP_MUX_WAIT`，`dp_mux_set()` 只提交路由请求；主循环先处理新收到的拔线/Reset/Exit，再执行一次 `hal_poll()`。HAL READY 才转 `DP_ACTIVE`，并开始 Source HPD 的 4 ms 低电平防护。等待期间收到的 HPD IRQ 会保留，不因后续只有高电平的 Attention 丢失。HAL FAULT 或 100 ms 超时转 `DP_FAILED/ERR_HARDWARE`。Soft Reset 保留已协商且等待硬件完成的模式。
 
 `pd_safe()` 取消所有未完成的路由；协议上的安全状态不代表失效 I²C 总线下物理开关必然关闭，详见 [BOARD2](BOARD2.md)。参考 GPIO HAL 立即返回 READY，通用协议测试另有延迟/超时/故障注入。
+
+## Sink 的 HPD 与异步 MUX 就绪
+
+物理显示器 HPD 先高时，DP Status/Attention 不能让主机在本端通路未就绪时开始 AUX 访问。本实现只在 `DP_ACTIVE` 发布 Sink HPD 高，`DP_MUX_WAIT`/失败/未配置期间发布低，丢弃配置前的 IRQ。CH9445 的全部路由读回完成后，UFP 发送 Attention，DFP 视频 Sink 发送 Status Update。该策略保留连接角色字段，不阻止对端在 HPD 低时发起 Configure。详见 [复现与修复](DIAGNOSTIC.md)。

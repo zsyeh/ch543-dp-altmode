@@ -1,22 +1,24 @@
 # 当前构建资源：Board2 / CH9445 更新
 
-2026-11-15，实际 SDCC 4.5.0 #15242。本表是新增异步 MUX/CH9445/Board2 后的构建；下方保留初版记录，避免混淆旧 Release 附件。
+2026-11-15 截图排查后重新执行干净构建，随后修复 Sink 提前报告 HPD 的问题，普通协议镜像较此前增加 24 B Flash；最新数值如下表。新增独立诊断镜像（不链接 PD）：**Flash 1305 B、iRAM 18 B + 15 B 空洞 + 223 B 栈区域、xRAM 16 B、静态栈估计 16 B**。模块分配：main code97；board2_diag code685/data5/idata1/xdata16；soft_i2c code431/data2/overlay1/bit3。寄存器组、位支撑与运行库计入总量，overlay不可累加。七个测试程序均通过普通运行和 ASan/UBSan；[本次原始日志与报告](validation/diagnostic/)。新文件名包含板型，默认 `make firmware` 不再构建参考板；旧版记录路径保留为历史证据。
+
+2026-11-15，实际 SDCC 4.5.0 #15242。本表包含新增诊断与 Sink HPD 修复；完整模块/内存/栈报告见 [当前验证目录](validation/diagnostic/)，链接日志为 `sink-fix-build-test.log` 与 `sink-fix-guard-rebuild.log`。
 
 | 板型 / 视频镜像 | Flash | iRAM 静态 | iRAM 空洞 | 栈容量 | xRAM | 静态栈估计 |
 |---|---:|---:|---:|---:|---:|---:|
-| Board2 Source / Sink（各） | 11,014 B | 191 B | 1 B | 64 B | 204 B | 32 B |
-| Board2 `VBUS_VERIFIED=1` 编译分支（各） | 11,024 B | 191 B | 1 B | 64 B | 204 B | 32 B |
-| 原 GPIO 参考板 Source / Sink（各） | 10,038 B | 187 B | 3 B | 66 B | 190 B | 30 B |
+| Board2 Source / Sink（各） | 11,038 B | 191 B | 1 B | 64 B | 204 B | 32 B |
+| Board2 `VBUS_VERIFIED=1` 编译分支（各） | 11,048 B | 191 B | 1 B | 64 B | 204 B | 32 B |
+| 原 GPIO 参考板 Source / Sink（各） | 10,062 B | 187 B | 3 B | 66 B | 190 B | 30 B |
 
-`VBUS_VERIFIED=1` 仅完成编译检查，未确认实物硬件；默认发布仍为0。[该分支构建记录](validation/board2/vbus-qualified-build.log)。
+`VBUS_VERIFIED=1` 仅完成编译检查，未确认实物硬件；默认发布仍为0。[该分支构建记录](validation/diagnostic/sink-fix-guard-rebuild.log)。
 
-Board2 Flash 余量 3,322 B（应用上限 14,336 B）；xRAM 余量 52 B。iRAM 布局 191+1+64=256 B，SP 初值 0xBF。静态汇编估计前台16 B + 低优先级中断4 B + PD中断12 B =32 B，估计栈余量32 B；没有实物水位测量。`tools/estimate_stack.py` 检查直接调用、分支路径、PUSH/POP 和中断返回地址，不涵盖 C 运行库初始化、未建模的编译器变化或异常执行。
+Board2 Flash 余量 3,298 B（应用上限 14,336 B）；xRAM 余量 52 B。iRAM 布局 191+1+64=256 B，SP 初值 0xBF。静态汇编估计前台16 B + 低优先级中断4 B + PD中断12 B =32 B，估计栈余量32 B；没有实物水位测量。`tools/estimate_stack.py` 检查直接调用、分支路径、PUSH/POP 和中断返回地址，不涵盖 C 运行库初始化、未建模的编译器变化或异常执行。
 
 | Module | code+const | data | idata | xdata | overlay* | bits |
 |---|---:|---:|---:|---:|---:|---:|
 | wire | 195 | 0 | 0 | 0 | 4 | 0 |
 | pd | 3137 | 24 | 67 | 60 | 8 | 0 |
-| dp | 3548 | 45 | 0 | 0 | 4 | 2 |
+| dp | 3572 | 45 | 0 | 0 | 4 | 2 |
 | ch543_phy | 2246 | 12 | 0 | 130 | 0 | 0 |
 | ch543_board2 | 606 | 3 | 2 | 6 | 1 | 0 |
 | ch9445 | 570 | 2 | 0 | 8 | 2 | 0 |
@@ -27,15 +29,15 @@ Board2 Flash 余量 3,322 B（应用上限 14,336 B）；xRAM 余量 52 B。iRAM
 
 Board2 新增 xRAM 为 CH9445 状态8 B和时间扩展6 B，共14 B；HPD 捕获时间戳2 B在idata。软件 I²C 的读回目的指针明确为 idata，避免默认 generic 指针的额外RAM和运行库开销。未使用汇编优化。
 
-当前证据：[完整构建/测试日志](validation/board2/build-test.log)、[Board2 Source 内存报告](validation/board2/board2-ch543-dp-source.mem)、[模块报告](validation/board2/board2-ch543-dp-source.resources.json)、[栈估计](validation/board2/board2-ch543-dp-source.stack.json)、[HEX 哈希](validation/board2/firmware-sha256.json)。同目录包含 Sink 和参考板的 map/mem/资源与栈报告。
+v0.2 历史证据（新版本见下述目录）：[完整构建/测试日志](validation/board2/build-test.log)、[Board2 Source 内存报告](validation/board2/board2-ch543-dp-source.mem)、[模块报告](validation/board2/board2-ch543-dp-source.resources.json)、[栈估计](validation/board2/board2-ch543-dp-source.stack.json)、[HEX 哈希](validation/board2/firmware-sha256.json)。同目录包含 Sink 和参考板的 map/mem/资源与栈报告。
 
-72 项协议测试 / 27,205 断言、7 组 PHY 模型、CH9445/I²C/Board2 HAL/完整协商模型与网表路由检查全部通过；全部 C 测试的 ASan/UBSan 通过。每次链接输出实际资源及栈估计，并保存 build 下资源历史。默认 Board2 仍因未确认 VBUS 电路而禁止 attach，不能把编译或仿真通过解读为原图可直接出图。
+76 项协议测试 / 27,812 断言、7 组 PHY 模型、CH9445/I²C/Board2 HAL/完整协商模型与网表路由检查全部通过；全部 C 测试的 ASan/UBSan 通过。每次链接输出实际资源及栈估计，并保存 build 下资源历史。默认 Board2 仍因未确认 VBUS 电路而禁止 attach，不能把编译或仿真通过解读为原图可直接出图。
 
-## 当前提交的 GitHub 复验
+## v0.2 的 GitHub 复验（历史）
 
 代码提交 `b429719` 的 [Actions 43658656642](https://github.com/zsyeh/ch543-dp-altmode/actions/runs/43658656642) 全部通过，SDCC 4.2.0+dfsg-1。Board2 Source/Sink 各为 Flash **11,122 B**、iRAM191 B+1 B空洞+64 B栈、xRAM204 B，生成汇编栈估计32 B；参考板各为Flash10,127 B、iRAM187 B+3 B空洞+66 B栈、xRAM190 B，栈估计30 B。两种编译器的数字分别来自实际链接，不能混用镜像哈希。
 
-[v0.2.0 Board2 实验版附件](https://github.com/zsyeh/ch543-dp-altmode/releases/tag/v0.2.0-board2-experimental) 是本地 SDCC4.5.0 的11,014 B受限镜像；CI产物另存在 Actions artifact。附件仍禁止PD attach，需先处理 BOARD2 文档中的真实电路问题。
+[v0.2.0 Board2 实验版附件](https://github.com/zsyeh/ch543-dp-altmode/releases/tag/v0.2.0-board2-experimental) 是本地 SDCC4.5.0 的11,038 B受限镜像；CI产物另存在 Actions artifact。附件仍禁止PD attach，需先处理 BOARD2 文档中的真实电路问题。
 
 # 初版参考板资源记录（v0.1.0）
 
