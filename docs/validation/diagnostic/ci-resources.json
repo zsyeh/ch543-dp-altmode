@@ -1,0 +1,430 @@
+{
+  "commit": "0e48704c86f394f4d413f5661060f5ab8c52c8a6",
+  "run": "https://github.com/zsyeh/ch543-dp-altmode/actions/runs/43689935808",
+  "images": [
+    {
+      "image": "ch543-board2-dp-sink-guarded.hex",
+      "sha256": "83e3640b62973d813ffd97a3b4424a7d1f757978435088ee02d2c4c8cead213f",
+      "resources": {
+        "image": "ch543-board2-dp-sink-guarded.ihx",
+        "sha256": "480df6b2d1c8fb11f77555dc186c726a30e5b322ba787965224196692c76bd36",
+        "flash": 11150,
+        "flash_limit": 14336,
+        "iram_occupied": 191,
+        "iram_holes": 1,
+        "stack_start": 192,
+        "stack_capacity": 64,
+        "xram": 204,
+        "xram_limit": 256,
+        "modules": [
+          {
+            "module": "wire",
+            "code": 194,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 0
+          },
+          {
+            "module": "pd",
+            "code": 3175,
+            "data": 24,
+            "idata": 67,
+            "xdata": 60,
+            "overlay": 8,
+            "bit_count": 0
+          },
+          {
+            "module": "dp",
+            "code": 3652,
+            "data": 45,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 2
+          },
+          {
+            "module": "ch543_phy",
+            "code": 2277,
+            "data": 12,
+            "idata": 0,
+            "xdata": 130,
+            "overlay": 0,
+            "bit_count": 0
+          },
+          {
+            "module": "ch543_board2",
+            "code": 607,
+            "data": 3,
+            "idata": 2,
+            "xdata": 6,
+            "overlay": 1,
+            "bit_count": 0
+          },
+          {
+            "module": "ch9445",
+            "code": 598,
+            "data": 2,
+            "idata": 0,
+            "xdata": 8,
+            "overlay": 2,
+            "bit_count": 0
+          },
+          {
+            "module": "soft_i2c",
+            "code": 433,
+            "data": 2,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 1,
+            "bit_count": 3
+          },
+          {
+            "module": "main-sink",
+            "code": 122,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 0,
+            "bit_count": 0
+          }
+        ]
+      },
+      "stack": {
+        "functions": 77,
+        "foreground": 16,
+        "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+        "low_isr_with_return": 4,
+        "pd_isr_with_return": 12,
+        "combined_estimate": 32,
+        "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+        "capacity": 64,
+        "estimated_headroom": 32
+      }
+    },
+    {
+      "image": "ch543-board2-dp-source-guarded.hex",
+      "sha256": "45c5482304c88faf0f6125e04fba2ab3cc40b440a93f6379b491f553aa7d9979",
+      "resources": {
+        "image": "ch543-board2-dp-source-guarded.ihx",
+        "sha256": "b3ff8d87349d7cc7619f4b8119489a3727042904ea43454a8b814bc1bb84952e",
+        "flash": 11150,
+        "flash_limit": 14336,
+        "iram_occupied": 191,
+        "iram_holes": 1,
+        "stack_start": 192,
+        "stack_capacity": 64,
+        "xram": 204,
+        "xram_limit": 256,
+        "modules": [
+          {
+            "module": "wire",
+            "code": 194,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 0
+          },
+          {
+            "module": "pd",
+            "code": 3175,
+            "data": 24,
+            "idata": 67,
+            "xdata": 60,
+            "overlay": 8,
+            "bit_count": 0
+          },
+          {
+            "module": "dp",
+            "code": 3652,
+            "data": 45,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 2
+          },
+          {
+            "module": "ch543_phy",
+            "code": 2277,
+            "data": 12,
+            "idata": 0,
+            "xdata": 130,
+            "overlay": 0,
+            "bit_count": 0
+          },
+          {
+            "module": "ch543_board2",
+            "code": 607,
+            "data": 3,
+            "idata": 2,
+            "xdata": 6,
+            "overlay": 1,
+            "bit_count": 0
+          },
+          {
+            "module": "ch9445",
+            "code": 598,
+            "data": 2,
+            "idata": 0,
+            "xdata": 8,
+            "overlay": 2,
+            "bit_count": 0
+          },
+          {
+            "module": "soft_i2c",
+            "code": 433,
+            "data": 2,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 1,
+            "bit_count": 3
+          },
+          {
+            "module": "main-source",
+            "code": 122,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 0,
+            "bit_count": 0
+          }
+        ]
+      },
+      "stack": {
+        "functions": 77,
+        "foreground": 16,
+        "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+        "low_isr_with_return": 4,
+        "pd_isr_with_return": 12,
+        "combined_estimate": 32,
+        "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+        "capacity": 64,
+        "estimated_headroom": 32
+      }
+    },
+    {
+      "image": "ch543-board2-diagnostic-uart115200.hex",
+      "sha256": "e599dab31c1872ac58cef29babbfa8dec27cd74ac244b68f09628f749d42f7ce",
+      "resources": {
+        "image": "ch543-board2-diagnostic-uart115200.ihx",
+        "sha256": "2bb367b0272ae6b5d0c118a99423bf4ad79e8f2a28032c02f965109d13ae55bf",
+        "flash": 1253,
+        "flash_limit": 14336,
+        "iram_occupied": 18,
+        "iram_holes": 15,
+        "stack_start": 33,
+        "stack_capacity": 223,
+        "xram": 16,
+        "xram_limit": 256,
+        "modules": [
+          {
+            "module": "main",
+            "code": 27,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 0,
+            "bit_count": 0
+          },
+          {
+            "module": "board2_diag",
+            "code": 701,
+            "data": 5,
+            "idata": 1,
+            "xdata": 16,
+            "overlay": 0,
+            "bit_count": 0
+          },
+          {
+            "module": "soft_i2c",
+            "code": 433,
+            "data": 2,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 1,
+            "bit_count": 3
+          }
+        ]
+      },
+      "stack": {
+        "functions": 12,
+        "foreground": 16,
+        "foreground_path": "_main[saved=0] -> _board2_diag_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+        "low_isr_with_return": 0,
+        "pd_isr_with_return": 0,
+        "combined_estimate": 16,
+        "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+        "capacity": 223,
+        "estimated_headroom": 207
+      }
+    },
+    {
+      "image": "ch543-reference-dp-sink.hex",
+      "sha256": "41a22063b16b428fba62d3d7a7aac8b39197aeb6aa1c4116625a3f4a21dff492",
+      "resources": {
+        "image": "ch543-reference-dp-sink.ihx",
+        "sha256": "118d61a73cf10790a533b8ac1d28988197ec6b990ab9b8fe5ea59252708bc1a4",
+        "flash": 10155,
+        "flash_limit": 14336,
+        "iram_occupied": 187,
+        "iram_holes": 3,
+        "stack_start": 190,
+        "stack_capacity": 66,
+        "xram": 190,
+        "xram_limit": 256,
+        "modules": [
+          {
+            "module": "wire",
+            "code": 194,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 0
+          },
+          {
+            "module": "pd",
+            "code": 3175,
+            "data": 24,
+            "idata": 67,
+            "xdata": 60,
+            "overlay": 8,
+            "bit_count": 0
+          },
+          {
+            "module": "dp",
+            "code": 3653,
+            "data": 45,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 2
+          },
+          {
+            "module": "ch543_phy",
+            "code": 2277,
+            "data": 12,
+            "idata": 0,
+            "xdata": 130,
+            "overlay": 0,
+            "bit_count": 0
+          },
+          {
+            "module": "ch543_board",
+            "code": 642,
+            "data": 5,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 2,
+            "bit_count": 0
+          },
+          {
+            "module": "main-sink",
+            "code": 122,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 0,
+            "bit_count": 0
+          }
+        ]
+      },
+      "stack": {
+        "functions": 69,
+        "foreground": 14,
+        "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+        "low_isr_with_return": 4,
+        "pd_isr_with_return": 12,
+        "combined_estimate": 30,
+        "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+        "capacity": 66,
+        "estimated_headroom": 36
+      }
+    },
+    {
+      "image": "ch543-reference-dp-source.hex",
+      "sha256": "5f0a9a76aaefca3db4c68542451bd46483e9b684b974dc3d54c31fbdf7a075e3",
+      "resources": {
+        "image": "ch543-reference-dp-source.ihx",
+        "sha256": "4316ce1d7b347beec8631d7cd44601335c6123b3aa7baa1d0ef6f6b73be3022c",
+        "flash": 10155,
+        "flash_limit": 14336,
+        "iram_occupied": 187,
+        "iram_holes": 3,
+        "stack_start": 190,
+        "stack_capacity": 66,
+        "xram": 190,
+        "xram_limit": 256,
+        "modules": [
+          {
+            "module": "wire",
+            "code": 194,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 0
+          },
+          {
+            "module": "pd",
+            "code": 3175,
+            "data": 24,
+            "idata": 67,
+            "xdata": 60,
+            "overlay": 8,
+            "bit_count": 0
+          },
+          {
+            "module": "dp",
+            "code": 3653,
+            "data": 45,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 4,
+            "bit_count": 2
+          },
+          {
+            "module": "ch543_phy",
+            "code": 2277,
+            "data": 12,
+            "idata": 0,
+            "xdata": 130,
+            "overlay": 0,
+            "bit_count": 0
+          },
+          {
+            "module": "ch543_board",
+            "code": 642,
+            "data": 5,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 2,
+            "bit_count": 0
+          },
+          {
+            "module": "main-source",
+            "code": 122,
+            "data": 0,
+            "idata": 0,
+            "xdata": 0,
+            "overlay": 0,
+            "bit_count": 0
+          }
+        ]
+      },
+      "stack": {
+        "functions": 69,
+        "foreground": 14,
+        "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+        "low_isr_with_return": 4,
+        "pd_isr_with_return": 12,
+        "combined_estimate": 30,
+        "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+        "capacity": 66,
+        "estimated_headroom": 36
+      }
+    }
+  ]
+}

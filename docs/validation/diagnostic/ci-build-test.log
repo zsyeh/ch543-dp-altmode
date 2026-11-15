@@ -1,0 +1,376 @@
+firmware	Run make test sanitize firmware reference	﻿2026-11-15T07:26:30.3193624Z ##[group]Run make test sanitize firmware reference
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:30.3194248Z [36;1mmake test sanitize firmware reference[0m
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:30.3216272Z shell: /usr/bin/bash -e {0}
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:30.3216855Z ##[endgroup]
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:30.3320065Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O2 src/wire.c src/pd.c src/dp.c hal/mock.c tests/test_protocol.c -o build/test_protocol
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:31.5907965Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O2 tests/test_phy.c -o build/test_phy
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:31.7920919Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests  -O2 tests/test_ch9445.c hal/ch9445.c -o build/test_ch9445
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:31.9318287Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DI2C_TEST -O2 tests/test_i2c.c hal/soft_i2c.c -o build/test_i2c
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.0605273Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -O2 tests/test_board2_hal.c  -o build/test_board2_hal
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.1435797Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -DMOCK_CH9445 -O2 tests/test_board2_protocol.c src/wire.c src/pd.c src/dp.c hal/mock.c hal/ch9445.c -o build/test_board2_protocol
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.5917098Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -O2 tests/test_board2_diag.c  -o build/test_board2_diag
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6901710Z ./build/test_protocol
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6911514Z PASS dfp_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6912102Z PASS dfp_sink
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6912724Z PASS ufp_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6913155Z PASS ufp_sink
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6913504Z PASS multifunction
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6913863Z PASS pin_e
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6914190Z PASS no_svid
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6914748Z PASS enter_nak
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6915099Z PASS busy_retry
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6915450Z PASS busy_exhaustion
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6915822Z PASS timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6916160Z PASS pin_mismatch
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6916797Z PASS reject_configure
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6917216Z PASS hpd_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6917556Z PASS hpd_sink
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6917900Z PASS detach
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6918227Z PASS detach_active
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6918579Z PASS soft_reset
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6918913Z PASS hard_reset
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6919246Z PASS duplicate
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6919591Z PASS illegal_status
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6919967Z PASS illegal_header
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6920470Z PASS illegal_roles
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6920979Z PASS bad_length
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6921319Z PASS retry
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6921851Z PASS retry_exhaustion
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6922451Z PASS exit_dfp
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6922788Z PASS exit_ufp
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6923132Z PASS active_config_nak
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6923616Z PASS power_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6924006Z PASS no_power
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6924290Z PASS source_gate
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6924579Z PASS cap_current_limit
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6924876Z PASS bad_cap
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6925139Z PASS role_config
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6925425Z PASS tick_wrap
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6925717Z PASS wrong_response
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6926015Z PASS attention_usb
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6926299Z PASS attention_exit
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6926860Z PASS dr_swap_active
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6927150Z PASS hard_reset_vbus
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6927589Z PASS soft_reset_dfp
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6927885Z PASS ufp_usb_config
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6928180Z PASS disconnect_attention
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6928647Z PASS config_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6929045Z PASS malformed_busy
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6929421Z PASS svid_low_half
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6929704Z PASS mode_object_two
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6929991Z PASS plug_mode
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6930339Z PASS no_vdm_before_contract
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6930781Z PASS generated_malformed_frames
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6931133Z PASS dfp_sink_status_hpd
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6931461Z PASS ufp_source_status_hpd
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6931791Z PASS ufp_source_exit_request
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6932147Z PASS ufp_ignores_dfp_attention
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6932490Z PASS dfp_status_reserved_zero
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6933117Z PASS hpd_guard_irq_once
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6933665Z PASS hpd_guard_detach
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6934104Z PASS hpd_guard_latest_level
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6934560Z PASS hard_reset_delayed_vbus_cycle
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6935021Z PASS hard_reset_hold_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6935452Z PASS ufp_status_disconnected
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6935900Z PASS pending_irq_preserved
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6936550Z PASS pending_irq_cleared_by_low
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6937059Z PASS phy_tx_end_missing
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6937522Z PASS status_busy_preserves_irq
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6937828Z PASS enter_timeout_boundary
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6938110Z PASS exit_timeout_boundary
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6938375Z PASS mux_delayed
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6938608Z PASS mux_fault
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6938833Z PASS mux_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6939062Z PASS mux_cancel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6939302Z PASS sink_hpd_waits_for_mux
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6939602Z PASS sink_hpd_mux_failure
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6939887Z PASS sink_hpd_mux_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6940172Z PASS dfp_sink_hpd_waits_for_mux
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6940612Z 76 tests, 0 failures, 27812 assertions (PC Mock HAL; no hardware validation)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6941069Z ./build/test_phy
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6941495Z PHY register model: 7 groups passed (functional only; no hardware/timing claim)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6942074Z ./build/test_ch9445
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6942654Z CH9445: 4 physical routes, 17 NACK stages, 8 readback faults, 18 cancellations, invalid pins and stale boot passed (model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6943300Z ./build/test_i2c
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6943853Z Software I2C: wire bits, repeated START, final NACK, write/read NACKs, failed STOP and bounded stuck lines passed (pin model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6944429Z ./build/test_board2_hal
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6946756Z Board2 HAL: GPIO safety, disabled VBUS guard, 140000 clock samples/wrap, CAP1 HPD boundaries, IRQ output and role direction passed (model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6947795Z ./build/test_board2_protocol
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6953318Z Board2 integration: 8 USB/video/orientation negotiations, C/E NAKs, delayed MUX/HPD, 17 detach phases passed (models)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6954228Z ./build/test_board2_diag
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6965308Z Board2 diagnostic: UART setup/framing, safe-only I2C, all 7 transaction failures, raw readbacks, no-UART progress and timer wrap passed (model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.6966596Z python3 tools/check_board2_routes.py
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.7230396Z EPRO netlist: all 4 D lane + AUX routes derived; C/E not routable; I2C pin mapping and R7 BOM flag checked
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:32.7286965Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer src/wire.c src/pd.c src/dp.c hal/mock.c tests/test_protocol.c -o build/test_protocol_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:34.4270116Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_phy.c -o build/test_phy_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:34.6662886Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests  -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_ch9445.c hal/ch9445.c -o build/test_ch9445_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:34.8194988Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DI2C_TEST -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_i2c.c hal/soft_i2c.c -o build/test_i2c_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:34.9692630Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_board2_hal.c  -o build/test_board2_hal_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.0687397Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -DMOCK_CH9445 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_board2_protocol.c src/wire.c src/pd.c src/dp.c hal/mock.c hal/ch9445.c -o build/test_board2_protocol_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.6313026Z gcc -std=c99 -Wall -Wextra -Werror -pedantic -Iinclude -Itests -DBOARD2 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer tests/test_board2_diag.c  -o build/test_board2_diag_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.7699451Z ASAN_OPTIONS=detect_leaks=1 ./build/test_protocol_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8758755Z PASS dfp_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8759353Z PASS dfp_sink
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8759746Z PASS ufp_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8760138Z PASS ufp_sink
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8760524Z PASS multifunction
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8760934Z PASS pin_e
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8761295Z PASS no_svid
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8761667Z PASS enter_nak
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8762050Z PASS busy_retry
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8762437Z PASS busy_exhaustion
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8762851Z PASS timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8763225Z PASS pin_mismatch
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8763631Z PASS reject_configure
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8764048Z PASS hpd_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8764429Z PASS hpd_sink
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8764796Z PASS detach
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8765168Z PASS detach_active
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8765584Z PASS soft_reset
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8765986Z PASS hard_reset
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8766558Z PASS duplicate
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8766966Z PASS illegal_status
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8767388Z PASS illegal_header
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8767793Z PASS illegal_roles
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8768193Z PASS bad_length
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8768571Z PASS retry
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8768944Z PASS retry_exhaustion
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8769365Z PASS exit_dfp
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8769739Z PASS exit_ufp
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8770123Z PASS active_config_nak
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8770624Z PASS power_source
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8771166Z PASS no_power
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8771662Z PASS source_gate
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8772158Z PASS cap_current_limit
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8772709Z PASS bad_cap
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8773173Z PASS role_config
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8773677Z PASS tick_wrap
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8774187Z PASS wrong_response
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8774734Z PASS attention_usb
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8775320Z PASS attention_exit
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8775885Z PASS dr_swap_active
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8776651Z PASS hard_reset_vbus
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8777202Z PASS soft_reset_dfp
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8777720Z PASS ufp_usb_config
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8778247Z PASS disconnect_attention
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8778836Z PASS config_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8779358Z PASS malformed_busy
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8779780Z PASS svid_low_half
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8780103Z PASS mode_object_two
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8780428Z PASS plug_mode
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8780751Z PASS no_vdm_before_contract
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8781145Z PASS generated_malformed_frames
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8781543Z PASS dfp_sink_status_hpd
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8781919Z PASS ufp_source_status_hpd
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8782292Z PASS ufp_source_exit_request
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8782682Z PASS ufp_ignores_dfp_attention
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8783079Z PASS dfp_status_reserved_zero
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8783462Z PASS hpd_guard_irq_once
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8783811Z PASS hpd_guard_detach
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8784162Z PASS hpd_guard_latest_level
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8784557Z PASS hard_reset_delayed_vbus_cycle
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8784980Z PASS hard_reset_hold_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8785360Z PASS ufp_status_disconnected
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8785742Z PASS pending_irq_preserved
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8786124Z PASS pending_irq_cleared_by_low
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8786903Z PASS phy_tx_end_missing
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8787268Z PASS status_busy_preserves_irq
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8787659Z PASS enter_timeout_boundary
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8788034Z PASS exit_timeout_boundary
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8788391Z PASS mux_delayed
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8788699Z PASS mux_fault
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8788998Z PASS mux_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8789302Z PASS mux_cancel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8789621Z PASS sink_hpd_waits_for_mux
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8790000Z PASS sink_hpd_mux_failure
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8790364Z PASS sink_hpd_mux_timeout
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8790740Z PASS dfp_sink_hpd_waits_for_mux
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8791322Z 76 tests, 0 failures, 27812 assertions (PC Mock HAL; no hardware validation)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8833729Z ASAN_OPTIONS=detect_leaks=1 ./build/test_phy_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8938976Z PHY register model: 7 groups passed (functional only; no hardware/timing claim)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.8952251Z ASAN_OPTIONS=detect_leaks=1 ./build/test_ch9445_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9073317Z CH9445: 4 physical routes, 17 NACK stages, 8 readback faults, 18 cancellations, invalid pins and stale boot passed (model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9084245Z ASAN_OPTIONS=detect_leaks=1 ./build/test_i2c_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9185383Z Software I2C: wire bits, repeated START, final NACK, write/read NACKs, failed STOP and bounded stuck lines passed (pin model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9190556Z ASAN_OPTIONS=detect_leaks=1 ./build/test_board2_hal_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9304217Z Board2 HAL: GPIO safety, disabled VBUS guard, 140000 clock samples/wrap, CAP1 HPD boundaries, IRQ output and role direction passed (model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9306111Z ASAN_OPTIONS=detect_leaks=1 ./build/test_board2_protocol_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9396681Z Board2 integration: 8 USB/video/orientation negotiations, C/E NAKs, delayed MUX/HPD, 17 detach phases passed (models)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9406862Z ASAN_OPTIONS=detect_leaks=1 ./build/test_board2_diag_sanitize
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9534235Z Board2 diagnostic: UART setup/framing, safe-only I2C, all 7 transaction failures, raw readbacks, no-UART progress and timer wrap passed (model)
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:35.9874705Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c src/wire.c -o build/board2/target/wire.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:36.0047013Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c src/pd.c -o build/board2/target/pd.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:36.4241662Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c src/dp.c -o build/board2/target/dp.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:36.8841077Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/ch543_phy.c -o build/board2/target/ch543_phy.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:36.9690726Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/ch543_board2.c -o build/board2/target/ch543_board2.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:36.9979384Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/ch9445.c -o build/board2/target/ch9445.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.0318657Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -c hal/soft_i2c.c -o build/board2/target/soft_i2c.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.0562321Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -DDEFAULT_DP_ROLE=1 -c src/main.c -o build/board2/target/main-source.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.0656614Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/board2/target/main-source.rel build/board2/target/wire.rel build/board2/target/pd.rel build/board2/target/dp.rel build/board2/target/ch543_phy.rel build/board2/target/ch543_board2.rel build/board2/target/ch9445.rel build/board2/target/soft_i2c.rel -o build/board2/ch543-board2-dp-source-guarded.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.0802637Z python3 tools/check_vectors.py build/board2/ch543-board2-dp-source-guarded.ihx --board2
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1133043Z build/board2/ch543-board2-dp-source-guarded.ihx: all 5 vectors + early startup verified: Reset@0000->0059, Timer0@000b->20eb, Timer1@001b->22d6, Timer2@002b->2264, USBPD@0053->1e76
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1191135Z python3 tools/memory_report.py build/board2/ch543-board2-dp-source-guarded.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1491570Z ch543-board2-dp-source-guarded.ihx: Flash 11150/14336 B; iRAM occupied 191 B + holes 1 B; stack 0xC0..0xFF = 64 B; xRAM 204/256 B.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1492687Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1493007Z | Module | code+const | data | idata | xdata | overlay* | bits |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1494019Z |---|---:|---:|---:|---:|---:|---:|
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1494677Z | wire | 194 | 0 | 0 | 0 | 4 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1495123Z | pd | 3175 | 24 | 67 | 60 | 8 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1495524Z | dp | 3652 | 45 | 0 | 0 | 4 | 2 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1495922Z | ch543_phy | 2277 | 12 | 0 | 130 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1496696Z | ch543_board2 | 607 | 3 | 2 | 6 | 1 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1497144Z | ch9445 | 598 | 2 | 0 | 8 | 2 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1497538Z | soft_i2c | 433 | 2 | 0 | 0 | 1 | 3 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1497947Z | main-source | 122 | 0 | 0 | 0 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1498230Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1499205Z * Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1500340Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.1538079Z python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-board2-dp-source-guarded.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2016363Z {
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2016989Z   "functions": 77,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2017327Z   "foreground": 16,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2018541Z   "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2019698Z   "low_isr_with_return": 4,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2020060Z   "pd_isr_with_return": 12,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2020410Z   "combined_estimate": 32,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2020992Z   "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2021620Z   "capacity": 64,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2021934Z   "estimated_headroom": 32
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2022258Z }
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2077286Z packihx build/board2/ch543-board2-dp-source-guarded.ihx > build/board2/ch543-board2-dp-source-guarded.hex
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2104167Z packihx: read 369 lines, wrote 711: OK.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2121551Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2=1 -DBOARD2_VBUS_VERIFIED=0 -DDEFAULT_DP_ROLE=2 -c src/main.c -o build/board2/target/main-sink.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2213677Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/board2/target/main-sink.rel build/board2/target/wire.rel build/board2/target/pd.rel build/board2/target/dp.rel build/board2/target/ch543_phy.rel build/board2/target/ch543_board2.rel build/board2/target/ch9445.rel build/board2/target/soft_i2c.rel -o build/board2/ch543-board2-dp-sink-guarded.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2362838Z python3 tools/check_vectors.py build/board2/ch543-board2-dp-sink-guarded.ihx --board2
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2698270Z build/board2/ch543-board2-dp-sink-guarded.ihx: all 5 vectors + early startup verified: Reset@0000->0059, Timer0@000b->20eb, Timer1@001b->22d6, Timer2@002b->2264, USBPD@0053->1e76
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.2748564Z python3 tools/memory_report.py build/board2/ch543-board2-dp-sink-guarded.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3044296Z ch543-board2-dp-sink-guarded.ihx: Flash 11150/14336 B; iRAM occupied 191 B + holes 1 B; stack 0xC0..0xFF = 64 B; xRAM 204/256 B.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3045372Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3045704Z | Module | code+const | data | idata | xdata | overlay* | bits |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3046780Z |---|---:|---:|---:|---:|---:|---:|
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3047299Z | wire | 194 | 0 | 0 | 0 | 4 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3047812Z | pd | 3175 | 24 | 67 | 60 | 8 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3048301Z | dp | 3652 | 45 | 0 | 0 | 4 | 2 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3048742Z | ch543_phy | 2277 | 12 | 0 | 130 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3049222Z | ch543_board2 | 607 | 3 | 2 | 6 | 1 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3049683Z | ch9445 | 598 | 2 | 0 | 8 | 2 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3050129Z | soft_i2c | 433 | 2 | 0 | 0 | 1 | 3 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3050579Z | main-sink | 122 | 0 | 0 | 0 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3050880Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3052004Z * Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3053758Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3091245Z python3 tools/estimate_stack.py build/board2/target --image build/board2/ch543-board2-dp-sink-guarded.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3561915Z {
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3562458Z   "functions": 77,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3562945Z   "foreground": 16,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3564482Z   "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _hal_poll[saved=0] -> _ch9445_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3566126Z   "low_isr_with_return": 4,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3567084Z   "pd_isr_with_return": 12,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3567634Z   "combined_estimate": 32,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3568504Z   "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3569446Z   "capacity": 64,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3569856Z   "estimated_headroom": 32
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3570274Z }
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3623653Z packihx build/board2/ch543-board2-dp-sink-guarded.ihx > build/board2/ch543-board2-dp-sink-guarded.hex
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.3650546Z packihx: read 369 lines, wrote 711: OK.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.4115602Z Board2 image manifest: build/board2/images-guarded.json; PD attach DISABLED
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.4197999Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2 -DBOARD2_DIAGNOSTIC -c src/main.c -o build/diagnostic/target/main.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.4294369Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2 -DBOARD2_DIAGNOSTIC -c src/board2_diag.c -o build/diagnostic/target/board2_diag.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.4598136Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DBOARD2 -DBOARD2_DIAGNOSTIC -c hal/soft_i2c.c -o build/diagnostic/target/soft_i2c.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.4839867Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/diagnostic/target/main.rel build/diagnostic/target/board2_diag.rel build/diagnostic/target/soft_i2c.rel -o build/diagnostic/ch543-board2-diagnostic-uart115200.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.4944378Z python3 tools/check_vectors.py build/diagnostic/ch543-board2-diagnostic-uart115200.ihx --diagnostic
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5282781Z build/diagnostic/ch543-board2-diagnostic-uart115200.ihx: all 1 vectors + early startup verified: Reset@0000->0006
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5333778Z python3 tools/memory_report.py build/diagnostic/ch543-board2-diagnostic-uart115200.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5628178Z ch543-board2-diagnostic-uart115200.ihx: Flash 1253/14336 B; iRAM occupied 18 B + holes 15 B; stack 0x21..0xFF = 223 B; xRAM 16/256 B.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5629189Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5629486Z | Module | code+const | data | idata | xdata | overlay* | bits |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5630127Z |---|---:|---:|---:|---:|---:|---:|
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5630580Z | main | 27 | 0 | 0 | 0 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5631056Z | board2_diag | 701 | 5 | 1 | 16 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5631565Z | soft_i2c | 433 | 2 | 0 | 0 | 1 | 3 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5631866Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5632988Z * Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5634275Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.5675870Z python3 tools/estimate_stack.py build/diagnostic/target --image build/diagnostic/ch543-board2-diagnostic-uart115200.ihx --no-interrupts
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6011938Z {
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6012306Z   "functions": 12,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6012652Z   "foreground": 16,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6013631Z   "foreground_path": "_main[saved=0] -> _board2_diag_poll[saved=1] -> _board_i2c_read[saved=3] -> _put_byte[saved=2] -> _clock_high[saved=0] -> _pause_bus",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6014758Z   "low_isr_with_return": 0,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6015173Z   "pd_isr_with_return": 0,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6015952Z   "combined_estimate": 16,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6017481Z   "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6018248Z   "capacity": 223,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6018619Z   "estimated_headroom": 207
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6019005Z }
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6063559Z packihx build/diagnostic/ch543-board2-diagnostic-uart115200.ihx > build/diagnostic/ch543-board2-diagnostic-uart115200.hex
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6080189Z packihx: read 48 lines, wrote 86: OK.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6097443Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/wire.c -o build/reference/target/wire.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:37.6267062Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/pd.c -o build/reference/target/pd.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.0526004Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c src/dp.c -o build/reference/target/dp.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.5275656Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c hal/ch543_phy.c -o build/reference/target/ch543_phy.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.6140423Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -c hal/ch543_board.c -o build/reference/target/ch543_board.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.6434759Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DDEFAULT_DP_ROLE=1 -c src/main.c -o build/reference/target/main-source.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.6525856Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/reference/target/main-source.rel build/reference/target/wire.rel build/reference/target/pd.rel build/reference/target/dp.rel build/reference/target/ch543_phy.rel build/reference/target/ch543_board.rel -o build/reference/ch543-reference-dp-source.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.6672294Z python3 tools/check_vectors.py build/reference/ch543-reference-dp-source.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.6990655Z build/reference/ch543-reference-dp-source.ihx: all 6 vectors + early startup verified: Reset@0000->0059, INT0@0003->2288, Timer0@000b->20ec, Timer1@001b->22fe, Timer2@002b->21a2, USBPD@0053->1e77
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7036846Z python3 tools/memory_report.py build/reference/ch543-reference-dp-source.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7335241Z ch543-reference-dp-source.ihx: Flash 10155/14336 B; iRAM occupied 187 B + holes 3 B; stack 0xBE..0xFF = 66 B; xRAM 190/256 B.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7336228Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7336854Z | Module | code+const | data | idata | xdata | overlay* | bits |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7337488Z |---|---:|---:|---:|---:|---:|---:|
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7337936Z | wire | 194 | 0 | 0 | 0 | 4 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7338378Z | pd | 3175 | 24 | 67 | 60 | 8 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7338819Z | dp | 3653 | 45 | 0 | 0 | 4 | 2 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7339284Z | ch543_phy | 2277 | 12 | 0 | 130 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7339888Z | ch543_board | 642 | 5 | 0 | 0 | 2 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7340481Z | main-source | 122 | 0 | 0 | 0 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7340904Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7342307Z * Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7343815Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7388210Z python3 tools/estimate_stack.py build/reference/target --image build/reference/ch543-reference-dp-source.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7851038Z {
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7851570Z   "functions": 69,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7852049Z   "foreground": 14,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7853427Z   "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7854940Z   "low_isr_with_return": 4,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7855467Z   "pd_isr_with_return": 12,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7855989Z   "combined_estimate": 30,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7857031Z   "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7858417Z   "capacity": 66,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7858938Z   "estimated_headroom": 36
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7859323Z }
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7911339Z packihx build/reference/ch543-reference-dp-source.ihx > build/reference/ch543-reference-dp-source.hex
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7939820Z packihx: read 337 lines, wrote 647: OK.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.7955195Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude -DDEFAULT_DP_ROLE=2 -c src/main.c -o build/reference/target/main-sink.rel
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8049729Z sdcc -mmcs51 --model-small --std-sdcc11 --opt-code-size -Iinclude --iram-size 256 --xram-loc 0 --xram-size 256 --code-size 14336 build/reference/target/main-sink.rel build/reference/target/wire.rel build/reference/target/pd.rel build/reference/target/dp.rel build/reference/target/ch543_phy.rel build/reference/target/ch543_board.rel -o build/reference/ch543-reference-dp-sink.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8197116Z python3 tools/check_vectors.py build/reference/ch543-reference-dp-sink.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8549367Z build/reference/ch543-reference-dp-sink.ihx: all 6 vectors + early startup verified: Reset@0000->0059, INT0@0003->2288, Timer0@000b->20ec, Timer1@001b->22fe, Timer2@002b->21a2, USBPD@0053->1e77
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8606905Z python3 tools/memory_report.py build/reference/ch543-reference-dp-sink.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8912802Z ch543-reference-dp-sink.ihx: Flash 10155/14336 B; iRAM occupied 187 B + holes 3 B; stack 0xBE..0xFF = 66 B; xRAM 190/256 B.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8914092Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8914496Z | Module | code+const | data | idata | xdata | overlay* | bits |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8915368Z |---|---:|---:|---:|---:|---:|---:|
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8915988Z | wire | 194 | 0 | 0 | 0 | 4 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8916896Z | pd | 3175 | 24 | 67 | 60 | 8 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8917445Z | dp | 3653 | 45 | 0 | 0 | 4 | 2 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8917942Z | ch543_phy | 2277 | 12 | 0 | 130 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8918436Z | ch543_board | 642 | 5 | 0 | 0 | 2 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8918929Z | main-sink | 122 | 0 | 0 | 0 | 0 | 0 |
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8919257Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8920376Z * Overlay columns overlap and must not be summed. Register banks, bit backing bytes and linker/runtime overhead are included only in totals. Stack capacity is not measured usage; see docs/STACK.md.
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8921674Z 
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.8959726Z python3 tools/estimate_stack.py build/reference/target --image build/reference/ch543-reference-dp-sink.ihx
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9422624Z {
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9423063Z   "functions": 69,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9423458Z   "foreground": 14,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9424585Z   "foreground_path": "_main[saved=0] -> _pd_poll[saved=0] -> _pd_step[saved=0] -> _receive_message[saved=0] -> _dp_receive[saved=0] -> _response[saved=6] -> _choose_mode",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9425783Z   "low_isr_with_return": 4,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9426211Z   "pd_isr_with_return": 12,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9427048Z   "combined_estimate": 30,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9427749Z   "scope": "static generated ASM; excludes C runtime startup; not hardware watermarked",
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9428556Z   "capacity": 66,
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9429022Z   "estimated_headroom": 36
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9429410Z }
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9491844Z packihx build/reference/ch543-reference-dp-sink.ihx > build/reference/ch543-reference-dp-sink.hex
+firmware	Run make test sanitize firmware reference	2026-11-15T07:26:38.9521737Z packihx: read 337 lines, wrote 647: OK.
